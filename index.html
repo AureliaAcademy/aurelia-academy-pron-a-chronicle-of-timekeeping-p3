@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>A Chronicle of Timekeeping · Part 3 · AURELIA ACADEMY</title>
+<script>try{var t=localStorage.getItem('apr2:theme');if(!t)t=matchMedia('(prefers-color-scheme:light)').matches?'light':'dark';document.documentElement.dataset.theme=t}catch(e){}</script>
+<style>
+:root{--bg:#0B0716;--c1:#140E25;--c2:#1C1535;--tx:#F1ECFF;--mu:#B4A9D6;--ac:#8B5CF6;--ac2:#A78BFA;--gd:#D4B26A;--bd:rgba(167,139,250,.22);--gl:rgba(20,14,37,.62);--st:#FFD98A;--ok:#6EE7B7;--no:#FCA5A5;--grid:rgba(167,139,250,.07);--glow:rgba(109,40,217,.45);--hdr:rgba(11,7,22,.72);color-scheme:dark}
+:root[data-theme=light]{--bg:#F6F2FF;--c1:#FFFFFF;--c2:#EFE8FF;--tx:#1C1535;--mu:#4B3F73;--ac:#6D28D9;--ac2:#5B21B6;--gd:#7A5A12;--bd:rgba(91,33,182,.25);--gl:rgba(255,255,255,.78);--st:#6D28D9;--ok:#047857;--no:#B91C1C;--grid:rgba(91,33,182,.07);--glow:rgba(139,92,246,.3);--hdr:rgba(250,247,255,.82);color-scheme:light}
+*{box-sizing:border-box;margin:0}
+[hidden]{display:none!important}
+html{scroll-padding-top:96px;-webkit-text-size-adjust:100%}
+body{min-height:100dvh;display:flex;flex-direction:column;background:var(--bg);color:var(--tx);font:16px/1.6 Inter,"Segoe UI Variable","SF Pro Text",system-ui,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+html.tswap *{transition:background-color .5s,color .5s,border-color .5s,box-shadow .5s!important}
+.bg{position:fixed;inset:0;z-index:-1;background:linear-gradient(var(--grid) 1px,transparent 1px) 0 0/44px 44px,linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/44px 44px,var(--bg)}
+.bg i{position:absolute;border-radius:50%;filter:blur(90px);background:var(--glow);width:46vmax;height:46vmax;animation:fl 26s ease-in-out infinite alternate}
+.bg i:nth-child(1){top:-15vmax;left:-10vmax}.bg i:nth-child(2){bottom:-18vmax;right:-12vmax;background:rgba(212,178,106,.18);animation-delay:-9s}
+@keyframes fl{to{transform:translate(8vmax,6vmax) scale(1.15)}}
+p,li{color:var(--mu)}
+ul{padding-left:20px}
+h2{font-size:clamp(22px,4vw,32px);letter-spacing:-.025em;margin:0 0 8px;line-height:1.2}
+h3{font-size:18px;letter-spacing:-.015em;margin-bottom:6px}
+.eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gd);font-weight:700}
+.cap{display:block;margin-bottom:9px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:11px;font-weight:600;line-height:1;letter-spacing:.18em;text-transform:uppercase;color:var(--gd)}
+.legend{font-size:14px;color:var(--mu);margin:8px 0 14px}.mut{color:var(--mu);font-size:14px}
+.sub2{color:var(--gd);font-size:12px;letter-spacing:.16em;text-transform:uppercase;margin:20px 0 8px}
+/* header */
+header{position:sticky;top:0;z-index:30;background:var(--hdr);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);border-bottom:1px solid var(--bd);padding:calc(env(safe-area-inset-top,0px) + 12px) 20px 12px;transition:box-shadow .3s}
+header.sc{box-shadow:0 10px 30px -12px rgba(0,0,0,.45)}
+.hw{max-width:1080px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.brand{font-weight:800;letter-spacing:.22em;font-size:13px;color:var(--gd);white-space:nowrap}.brand b{color:var(--tx);font-weight:800}
+.hr{display:flex;align-items:center;gap:10px}
+/* buttons */
+.btn{font:inherit;font-size:13.5px;font-weight:650;line-height:1;color:var(--tx);background:var(--c1);border:1px solid var(--bd);border-radius:999px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;position:relative;overflow:hidden;white-space:nowrap;transition:transform .3s cubic-bezier(.3,1.5,.5,1),border-color .2s,box-shadow .3s,filter .2s}
+.btn svg{flex:none}
+.btn:hover{border-color:var(--ac2);transform:translateY(-1px)}
+.btn:active{transform:scale(.95)}
+.btn:focus-visible,.xb:focus-visible,.chip:focus-visible,.qi:focus-visible,.tb:focus-visible,.uchip:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid var(--gd);outline-offset:2px}
+.btn.pri,.btn.gold,.btn.rec{border-color:transparent;color:#fff}
+.btn.pri{background:linear-gradient(135deg,#7C3AED,#5B21B6);box-shadow:0 10px 22px -12px rgba(124,58,237,.95)}
+.btn.gold{background:linear-gradient(135deg,#B8913F,#E8D090);color:#1C1535;box-shadow:0 14px 30px -14px rgba(184,145,63,.9)}
+.btn.rec{background:linear-gradient(135deg,#EF4444,#B91C1C);box-shadow:0 10px 22px -12px rgba(220,38,38,.9)}
+.btn.pri::after,.btn.gold::after,.btn.rec::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);transform:translateX(-130%);transition:transform .8s}
+.btn.pri:hover::after,.btn.gold:hover::after,.btn.rec:hover::after{transform:translateX(130%)}
+.btn.sm{padding:8px 14px;font-size:12.5px}
+.btn.big{width:100%;height:54px;font-size:16px;border-radius:16px}
+/* expanding pill groups: only the selected button grows */
+.xp{display:inline-flex;flex-wrap:wrap;gap:3px;padding:4px;border:1px solid var(--bd);border-radius:24px;background:var(--c1)}
+.xb{display:inline-flex;align-items:center;height:36px;min-width:36px;padding:0 10px;justify-content:center;border:0;border-radius:999px;background:transparent;color:var(--mu);font:inherit;font-size:13.5px;font-weight:650;cursor:pointer;white-space:nowrap;transition:background .35s,color .25s,padding .4s cubic-bezier(.3,1,.4,1),box-shadow .35s,transform .2s}
+.xb svg{flex:none;width:18px;height:18px}
+.xb:hover{color:var(--tx);background:rgba(139,92,246,.14)}
+.xb:active{transform:scale(.92)}
+.xb[aria-pressed=true],.xb[aria-selected=true]{padding:0 16px 0 12px;background:linear-gradient(135deg,#7C3AED,#5B21B6);color:#fff;box-shadow:0 8px 18px -8px rgba(124,58,237,.95)}
+.xb .l{display:grid;grid-template-columns:0fr;opacity:0;margin-left:0;transition:grid-template-columns .45s cubic-bezier(.3,1,.4,1),opacity .3s,margin-left .45s cubic-bezier(.3,1,.4,1)}
+.xb .l>span{overflow:hidden;min-width:0}
+.xb[aria-pressed=true] .l,.xb[aria-selected=true] .l{grid-template-columns:1fr;opacity:1;margin-left:8px}
+.xb .dt{width:6px;height:6px;border-radius:50%;background:var(--gd);margin-left:6px;flex:none}
+.xb[aria-pressed=true] .dt{display:none}
+/* theme button */
+.tb{position:relative;width:44px;height:44px;border-radius:50%;border:1px solid var(--bd);background:var(--c1);color:var(--gd);display:grid;place-items:center;cursor:pointer;flex:none;transition:transform .45s cubic-bezier(.3,1.5,.5,1),border-color .2s,box-shadow .3s}
+.tb:hover{border-color:var(--gd);transform:rotate(20deg);box-shadow:0 0 0 4px rgba(212,178,106,.14),0 10px 22px -10px var(--glow)}
+.tb:active{transform:scale(.9)}
+.tb svg{grid-area:1/1;width:20px;height:20px;transition:transform .6s cubic-bezier(.3,1.4,.5,1),opacity .35s}
+:root[data-theme=dark] .tb .sun{opacity:0;transform:rotate(-100deg) scale(.3)}
+:root[data-theme=light] .tb .moon{opacity:0;transform:rotate(100deg) scale(.3)}
+.uchip{display:inline-flex;align-items:center;gap:9px;height:44px;padding:0 14px 0 6px;border:1px solid var(--bd);border-radius:999px;background:var(--c1);color:var(--tx);font:inherit;font-size:14px;font-weight:650;cursor:pointer;transition:border-color .2s,transform .25s}
+.uchip:hover{border-color:var(--ac2)}.uchip:active{transform:scale(.95)}
+.uchip .av{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:14px;color:#fff;background:linear-gradient(135deg,#7C3AED,#B8913F)}
+.uchip .un{max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+main{flex:1;width:100%;max-width:1080px;margin:0 auto;padding:32px 20px 64px}
+.card{background:var(--gl);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--bd);border-radius:26px;padding:26px;box-shadow:0 18px 44px -22px rgba(20,10,60,.5)}
+.pane{animation:inF .5s cubic-bezier(.2,.7,.2,1)}.pane.back{animation-name:inB}
+@keyframes inF{from{opacity:0;transform:translateX(36px)}}@keyframes inB{from{opacity:0;transform:translateX(-36px)}}
+
+/* gate */
+.gate{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);gap:56px;align-items:center;min-height:calc(100dvh - 250px);padding:8px 0}
+.gate h1{font-size:clamp(44px,7.4vw,86px);line-height:.98;letter-spacing:-.045em;font-weight:800;margin:14px 0 18px;color:var(--tx)}
+.gate h1 em{display:block;font-style:normal;background:linear-gradient(100deg,var(--ac) 5%,var(--ac2) 45%,var(--gd) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:.08em}
+.gate .sub{font-size:18px;max-width:520px}
+.stats{display:flex;gap:12px;flex-wrap:wrap;margin:28px 0 20px}
+.stat{min-width:104px;padding:16px 14px 14px;border:1px solid var(--bd);border-radius:18px;background:var(--c1);text-align:center;box-shadow:0 14px 30px -22px var(--glow)}
+.stat b{display:block;font-size:28px;line-height:1.1;font-variant-numeric:tabular-nums;color:var(--tx)}
+.stat span{display:block;margin-top:6px;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mu)}
+.how{border:1px solid var(--bd);border-radius:18px;background:var(--c1);padding:0 18px;max-width:560px}
+.how summary{cursor:pointer;padding:15px 0;font-weight:700;color:var(--tx);list-style:none;display:flex;align-items:center;gap:12px}
+.how summary::-webkit-details-marker{display:none}
+.how summary::before{content:"";width:0;height:0;border-left:8px solid var(--tx);border-top:5px solid transparent;border-bottom:5px solid transparent;transition:transform .25s}
+.how[open] summary::before{transform:rotate(90deg)}
+.how ul{padding-bottom:16px}.how li{margin:6px 0;font-size:14.5px}
+.cand{padding:34px;box-shadow:0 40px 80px -34px var(--glow)}
+.cand h2{font-size:26px}
+.fl{display:block;margin:22px 0 8px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ac2)}
+input[type=text],select{width:100%;height:54px;font:inherit;font-size:16px;color:var(--tx);background:var(--c1);border:1px solid var(--bd);border-radius:16px;padding:0 16px;transition:border-color .2s,box-shadow .2s}
+input[type=text]:focus{outline:0;border-color:var(--ac2);box-shadow:0 0 0 4px rgba(139,92,246,.2)}
+.shake{animation:shk .4s}@keyframes shk{25%{transform:translateX(-7px)}50%{transform:translateX(7px)}75%{transform:translateX(-4px)}}
+.err{min-height:22px;margin:8px 0 10px;font-size:14px;color:var(--no)}
+/* practice console */
+.chip{display:inline-flex;align-items:center;gap:9px;font:inherit;font-size:13.5px;font-weight:650;line-height:1;padding:10px 15px;border-radius:999px;border:1px solid var(--bd);background:transparent;color:var(--mu);cursor:pointer;transition:all .3s cubic-bezier(.3,1.4,.5,1)}
+.chip::before{content:"";width:8px;height:8px;border-radius:50%;border:2px solid var(--mu);transition:.3s}
+.chip:hover{border-color:var(--ac2)}.chip:active{transform:scale(.94)}
+.chip[aria-pressed=true]{color:var(--tx);border-color:var(--ac2);background:rgba(139,92,246,.16);padding:10px 17px}
+.chip[aria-pressed=true]::before{background:var(--gd);border-color:var(--gd);box-shadow:0 0 10px var(--gd)}
+.ring{--p:0;width:84px;height:84px;border-radius:50%;background:conic-gradient(var(--gd) calc(var(--p)*1%),var(--bd) 0);display:grid;place-items:center;flex:none;transition:background .6s}
+.ring b{width:66px;height:66px;border-radius:50%;background:var(--c1);display:grid;place-items:center;font-size:24px;color:var(--tx)}
+.bar2{height:6px;border-radius:6px;background:var(--bd);overflow:hidden}.bar2 i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ac),var(--gd));transition:width .7s cubic-bezier(.3,1,.4,1)}
+#aB .is{display:none}#aB[aria-pressed=true] .is{display:block}#aB[aria-pressed=true] .ip{display:none}
+/* sentences */
+.sent{display:grid;grid-template-columns:52px 1fr;gap:14px;padding:20px 22px;margin-bottom:16px;transition:outline-color .3s}
+.sent .no{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;font-weight:800;color:var(--gd);border:1px solid var(--bd);background:var(--c2);font-variant-numeric:tabular-nums}
+.sent .bd{min-width:0}.sent.cur{outline:2px solid var(--gd);outline-offset:3px}
+.en{font-size:clamp(18px,3vw,22px);line-height:1.65;color:var(--tx);font-weight:500}
+.en b{color:var(--st);font-weight:800;border-bottom:2px solid var(--gd)}
+.en i{font-style:normal;color:var(--ac2);font-weight:800;padding:0 4px}
+.ipa{font-family:"Segoe UI","Noto Sans","Lucida Sans Unicode",sans-serif;color:var(--ac2);font-size:15px;word-break:break-word}
+.sent .ipa{background:var(--c2);border-radius:14px;padding:10px 14px;margin-top:12px}
+.vi{margin-top:12px;font-size:15px;border-left:3px solid var(--gd);padding-left:10px}
+.vi.nt{border-left-color:var(--ac2);background:var(--c2);padding:10px 12px;border-radius:0 12px 12px 0}
+.hide-ipa .ipa,.hide-vi .vi{display:none}
+.blind .en{filter:blur(7px);cursor:pointer;transition:filter .3s}.blind .en.show{filter:none}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;align-items:center}.acts .best{margin-left:auto}
+.best{font-size:13px;color:var(--gd);font-weight:700}
+.rz{margin-top:12px}.rz:empty{display:none}
+.rzb{border:1px solid var(--bd);border-radius:18px;padding:14px;animation:inF .4s;color:var(--tx)}
+.w{display:inline-block;margin:3px 4px;padding:1px 9px;border-radius:10px;font-weight:600;cursor:pointer;color:var(--tx)}
+.w.ok{color:var(--ok);border:1px solid var(--ok)}.w.bad{color:var(--no);border:1px solid var(--no)}.w.miss{color:var(--mu);border:1px dashed var(--mu);text-decoration:line-through}
+.w sup,.dw sup{font-size:10px;margin-left:4px;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+.wv{display:block;width:100%;height:72px;margin:10px 0;border-radius:14px;background:var(--c1);border:1px solid var(--bd)}
+.tmr{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:14px;color:var(--gd);font-weight:700}
+.acts audio,.take audio{height:34px;max-width:100%}
+.dg{border:1px solid var(--bd);border-left:4px solid var(--no);border-radius:14px;padding:10px 14px;margin:10px 0;color:var(--tx)}
+.dg.gd{border-left-color:var(--gd)}.dg p{margin:4px 0;color:var(--tx)}.dh{margin-bottom:4px}
+.wd{font-size:17px;cursor:pointer;color:var(--tx)}.ipa2{color:var(--ac2)}
+/* dictation */
+textarea{width:100%;border:1px solid var(--bd);background:var(--c1);color:var(--tx);border-radius:16px;padding:14px 16px;font:inherit;font-size:18px;resize:vertical;transition:border-color .2s,box-shadow .2s}
+textarea:focus{outline:0;border-color:var(--ac2);box-shadow:0 0 0 4px rgba(139,92,246,.2)}
+#dn{margin:16px 0}
+.dip{font-size:clamp(16px,2.6vw,20px);margin-top:8px}
+.diff{font-size:clamp(17px,2.6vw,20px);line-height:2.2;margin:10px 0}
+.dw{display:inline-block;padding:1px 8px;border-radius:8px;font-weight:600;line-height:1.6}
+.dw.ok{color:var(--ok)}.dw.bad{background:rgba(220,38,38,.14);color:var(--no);border:1px solid var(--no)}.dw.miss{background:rgba(212,178,106,.2);color:var(--gd);border:1px dashed var(--gd)}.dw.ext{color:var(--mu);border:1px solid var(--bd);background:var(--c2)}
+/* skills */
+.tw{overflow-x:auto;border:1px solid var(--bd);border-radius:20px;margin-top:14px}
+table{border-collapse:collapse;width:100%;min-width:560px}
+th,td{padding:11px 16px;text-align:left;vertical-align:top;border-bottom:1px solid var(--bd)}tr:last-child td{border-bottom:0}
+th{color:var(--gd);font-size:12px;letter-spacing:.14em;text-transform:uppercase}td:first-child{color:var(--tx);font-weight:700}
+tbody tr:nth-child(even){background:var(--c2)}
+/* studio */
+.qlist{display:grid;gap:10px;margin:18px 0}
+.qi{display:flex;align-items:flex-start;gap:14px;text-align:left;font:inherit;color:var(--tx);background:var(--c1);border:1px solid var(--bd);border-radius:18px;padding:14px 16px;cursor:pointer;transition:border-color .25s,box-shadow .3s,background .3s,transform .3s cubic-bezier(.3,1.4,.5,1)}
+.qi:hover{border-color:var(--ac2)}.qi:active{transform:scale(.99)}
+.qi[aria-checked=true]{border-color:var(--gd);background:linear-gradient(160deg,var(--c2),var(--c1));box-shadow:0 14px 30px -18px var(--glow)}
+.qn{flex:none;width:34px;height:34px;border-radius:12px;display:grid;place-items:center;font-weight:800;font-variant-numeric:tabular-nums;color:var(--gd);border:1px solid var(--bd);background:var(--c2);transition:.3s}
+.qi[aria-checked=true] .qn{background:var(--gd);border-color:var(--gd);color:#1C1535}
+.qt{flex:1;min-width:0;font-weight:600;font-size:16px;line-height:1.5}.qt small{display:block;margin-top:4px;font-weight:400;font-size:13px;color:var(--mu)}
+.qb{flex:none;align-self:center;min-width:26px;height:26px;padding:0 8px;border-radius:999px;display:grid;place-items:center;font-size:12px;font-weight:800;background:var(--ac);color:#fff}
+.rec-panel{border:1px solid var(--bd);border-radius:22px;padding:18px;background:linear-gradient(160deg,var(--c2),var(--c1))}
+.rp-top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px}.rp-top b{font-size:18px}
+.rec-panel .wv{margin:14px 0 4px}.rec-panel .acts{gap:14px}
+.take{border:1px solid var(--bd);border-radius:16px;padding:12px 14px;margin-top:10px;color:var(--tx);background:var(--c1)}.take audio{width:100%;margin-top:8px}
+.tk-h{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:baseline}
+.sa-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:16px 0}
+.crit{border:1px solid var(--bd);border-radius:18px;padding:14px;background:var(--c1)}
+.crit h3{color:var(--tx);font-size:15px;margin-bottom:2px}.crit .mut{margin:0 0 12px}
+.rate{display:flex;gap:6px;align-items:center}
+.rate button{flex:1;height:38px;border-radius:12px;border:1px solid var(--bd);background:transparent;color:var(--mu);font:inherit;font-weight:700;cursor:pointer;transition:all .35s cubic-bezier(.3,1.5,.5,1)}
+.rate button:hover{border-color:var(--ac2);color:var(--tx)}
+.rate button[aria-pressed=true]{flex:1.7;height:44px;background:linear-gradient(135deg,#7C3AED,#5B21B6);border-color:transparent;color:#fff;box-shadow:0 10px 20px -10px rgba(124,58,237,.95)}
+.res{margin-top:6px;border:1px solid var(--gd);border-radius:20px;padding:16px;animation:inF .5s;color:var(--tx)}.res strong{color:var(--gd)}
+#tt{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--c2);color:var(--tx);border:1px solid var(--gd);border-radius:999px;padding:10px 18px;z-index:50;display:none;max-width:90vw;font-size:14px}
+footer{padding:28px 16px calc(28px + env(safe-area-inset-bottom,0px));text-align:center;border-top:1px solid var(--bd);background:var(--gl);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);font-size:14px;color:var(--mu)}
+footer b{display:block;color:var(--gd);letter-spacing:.2em;font-size:15px}
+@media(max-width:900px){.gate{grid-template-columns:1fr;gap:32px;min-height:0}.deck{grid-template-columns:1fr}.rec-panel .acts{flex-direction:column;align-items:stretch}}
+@media(max-width:700px){.brand{font-size:0}.brand b{font-size:12px}.uchip .un{display:none}.uchip{padding:0 6px}.sent{grid-template-columns:1fr;padding:16px}.sent .no{width:36px;height:36px}main{padding:22px 14px 48px}.cand{padding:24px}.card{padding:20px}header{padding-left:12px;padding-right:12px}.stat{flex:1;min-width:76px}}
+@media(prefers-reduced-motion:reduce){*,.bg i{animation:none!important;transition:none!important}.rv:not(.on),.stg:not(.on)>*{opacity:1!important}}
+@media print{@page{size:A4;margin:12mm}html,body{background:#fff!important;color:#1c1535!important;display:block;min-height:0;font-size:10.5pt}.bg,#spb,header,#dock,#tt,.noprint,.btn,.tb{display:none!important}.pane{display:none!important}#p5{display:block!important;animation:none!important}.rv,.rv *,.stg>*{opacity:1!important;transform:none!important;filter:none!important;animation:none!important}.card{background:#fff!important;border:1px solid #cfc8e6!important;box-shadow:none!important;backdrop-filter:none!important}#p5,#p5 *{-webkit-print-color-adjust:exact;print-color-adjust:exact}#p5 .rp-hd{background:#f4efff!important}#p5 .kpi,#p5 .tw{background:#fff!important}#p5 .tw{overflow:visible;border-color:#cfc8e6}#p5 .rt{min-width:0}#p5 h2,#p5 h3,#p5 b,#p5 td,#p5 th{color:#1c1535!important}#p5 .ring b{background:#fff!important}tr{break-inside:avoid}.rp-body{gap:18px}footer{background:#fff!important;backdrop-filter:none!important;border-top:1px solid #cfc8e6;color:#555!important;padding:10px}footer b{color:#7A5A12!important}#p5 .kpis{grid-template-columns:1.5fr repeat(4,1fr)!important;gap:8px!important}#p5 .kpi.main{grid-column:auto!important;gap:10px}#p5 .kpi{padding:9px 10px}#p5 .kpi b{font-size:17pt}#p5 .kpi.main b{font-size:12pt}#p5 .kpi.main .ring{width:70px;height:70px}#p5 .kpi.main .ring b{width:54px;height:54px;font-size:17pt}#p5 .rp-two{grid-template-columns:1fr 1fr!important;gap:18px!important}#p5 .rp-meta{text-align:right!important}#p5 .rp-st{justify-self:end!important}#p5 .rp-hd{padding:14px 18px!important}#p5 .rp-body{padding:14px 18px!important;gap:14px!important}#p5 .rt td,#p5 .rt th{padding:5px 8px}#p5 .rt-l{font-size:9pt;width:46%}#p5 .rt-l{white-space:normal}#p5 .sig>div{height:42px}#p5 .sal>div{gap:8px}#p5 h3{margin-bottom:6px;font-size:12pt}.rp-hd h2{font-size:18pt}main{padding:0!important}#p5 .kpi .cap{letter-spacing:.06em;font-size:7.5pt}#p5 .rt td,#p5 .rt th{padding:4px 8px}#p5 .sig>div{height:28px}#p5 .rp-ft{font-size:8pt}#p5 .rp-hd .mut{font-size:9pt}#p5 .rp-body{gap:10px!important;padding:10px 18px!important}#p5 .rp-hd{padding:10px 18px!important}#p5 .rt td,#p5 .rt th{padding:2.5px 8px!important}#p5 .sig>div{height:22px}#p5 .kpi{padding:7px 10px}#p5 .rt-l{font-size:8.5pt}footer{display:none!important}.prt{display:block!important;margin-top:6px;text-align:center;color:#555}}
+
+/* ---------- scroll motion ---------- */
+#spb{position:fixed;top:0;left:0;right:0;height:3px;z-index:40;background:linear-gradient(90deg,var(--ac),var(--ac2),var(--gd));transform-origin:0 50%;transform:scaleX(var(--sp,0));pointer-events:none;box-shadow:0 0 12px var(--ac2)}
+.bg i{translate:0 calc(var(--sy,0)*-.07px)}.bg i:nth-child(2){translate:0 calc(var(--sy,0)*-.13px)}
+.rv:not(.on){opacity:0}
+.rv.on{animation:rvUp .9s cubic-bezier(.2,.7,.2,1) var(--d,0s) backwards}
+.rv.on[data-r=l]{animation-name:rvL}.rv.on[data-r=r]{animation-name:rvR}.rv.on[data-r=z]{animation-name:rvZ}
+.stg:not(.on)>*{opacity:0}
+.stg.on>*{animation:stgIn .75s cubic-bezier(.3,1.3,.5,1) calc(var(--d,0s) + var(--i,0)*.1s) backwards}
+.deck.stg.on>.dk:first-child{animation-name:rvL;animation-duration:.95s;animation-timing-function:cubic-bezier(.2,.7,.2,1)}
+.deck.stg.on>.dk:last-child{animation-name:rvR;animation-duration:.95s;animation-timing-function:cubic-bezier(.2,.7,.2,1)}
+.sent.on .no{animation:popIn .7s cubic-bezier(.3,1.6,.5,1) .2s backwards}
+.sent.on .bd>*{animation:rvUp2 .65s cubic-bezier(.2,.7,.2,1) calc(.18s + var(--i,0)*.08s) backwards}
+.sent .bd>:nth-child(1){--i:0}.sent .bd>:nth-child(2){--i:1}.sent .bd>:nth-child(3){--i:2}.sent .bd>:nth-child(4){--i:3}.sent .bd>:nth-child(5){--i:4}.sent .bd>:nth-child(6){--i:5}
+.tw.on tbody tr{animation:rowIn .65s cubic-bezier(.2,.7,.2,1) calc(.2s + var(--i,0)*.08s) backwards}
+@keyframes rvUp{from{opacity:0;transform:translateY(36px) scale(.985);filter:blur(6px)}}
+@keyframes rvL{from{opacity:0;transform:translateX(-52px);filter:blur(6px)}}
+@keyframes rvR{from{opacity:0;transform:translateX(52px);filter:blur(6px)}}
+@keyframes rvZ{from{opacity:0;transform:scale(.9);filter:blur(6px)}}
+@keyframes rvUp2{from{opacity:0;transform:translateY(16px)}}
+@keyframes stgIn{from{opacity:0;transform:translateY(22px) scale(.94)}}
+@keyframes popIn{from{opacity:0;transform:scale(.4) rotate(-14deg)}}
+@keyframes rowIn{from{opacity:0;transform:translateX(-20px)}}
+/* ---------- control deck ---------- */
+.deck{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:18px;margin:22px 0 30px;align-items:stretch}
+.dk{position:relative;display:flex;flex-direction:column;gap:20px;padding:22px;border:1px solid var(--bd);border-radius:24px;background:linear-gradient(165deg,var(--c2),var(--c1));overflow:hidden;box-shadow:0 26px 54px -34px var(--glow)}
+.dk::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,var(--gd),var(--ac2),transparent)}
+.dk::after{content:"";position:absolute;right:-70px;top:-70px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,var(--glow),transparent 70%);opacity:.55;pointer-events:none}
+.dk>*{position:relative;z-index:1}
+.dk-h{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:30px}.dk-h .cap{margin:0}
+.dk-n{font-size:12.5px;color:var(--mu);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fgrid{display:grid;grid-template-columns:1.3fr 1fr;gap:16px}.fld{min-width:0}
+.fld select{height:48px;font-size:14px;border-radius:14px;padding:0 12px}
+.xp.fill{display:flex;width:100%;flex-wrap:nowrap;border-radius:16px}
+.xp.fill .xb{flex:1 1 0;min-width:0;height:40px;padding:0 6px;transition:flex .55s cubic-bezier(.3,1,.4,1),background .35s,color .25s,box-shadow .35s,transform .2s}
+.xp.fill .xb[aria-pressed=true]{flex:2.4 1 0;padding:0 8px}
+#aB{gap:10px}
+#aB[aria-pressed=true]{background:linear-gradient(135deg,#EF4444,#B91C1C);box-shadow:0 14px 28px -14px rgba(220,38,38,.9)}
+.tgl{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tgl .chip{justify-content:center;height:44px;padding:0 8px}.tgl .chip[aria-pressed=true]{padding:0 8px}
+.dk .note{margin:0;font-size:13px;line-height:1.5;padding-top:14px;border-top:1px dashed var(--bd)}
+.who-chip{display:inline-flex;align-items:center;gap:8px;max-width:62%;padding:5px 13px 5px 10px;border:1px solid var(--bd);border-radius:999px;background:var(--c1);font-size:13px;font-weight:650;color:var(--tx)}
+.who-chip i{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 9px var(--ok);flex:none}
+.who-chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sc-top{display:flex;align-items:center;gap:20px}
+.sc-top .ring{width:108px;height:108px}.sc-top .ring b{width:86px;height:86px;font-size:32px;letter-spacing:-.03em}
+.sc-top strong{display:block;font-size:19px;letter-spacing:-.02em}.sc-top .big-s{display:block;font-size:13px;color:var(--mu)}.sc-top small{display:block;margin-top:8px;color:var(--mu);font-size:12.5px;line-height:1.45}
+.sc-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.mt{min-width:0;padding:13px 13px 14px;border:1px solid var(--bd);border-radius:16px;background:var(--c1)}
+.mt span{display:block;font-size:12.5px;font-weight:600;color:var(--mu);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mt b{display:block;margin:7px 0 11px;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:20px;line-height:1;letter-spacing:-.03em;color:var(--tx)}
+.dk-sc .btn{margin-top:auto;align-self:flex-end}
+@media(max-width:560px){.fgrid{grid-template-columns:1fr}.sc-top .ring{width:92px;height:92px}.sc-top .ring b{width:72px;height:72px;font-size:26px}.mt b{font-size:17px}}
+/* ---------- responsive fixes (placed last so they win) ---------- */
+.dk-sc .btn{width:100%;align-self:stretch;height:44px;margin-top:auto}
+@media(max-width:900px){.deck{grid-template-columns:1fr}}
+@media(max-width:560px){
+.brand{display:none}.hw{gap:8px}
+#nv.xp{flex-wrap:nowrap;gap:2px;padding:3px}
+#nv .xb{min-width:34px;height:34px;padding:0 8px}
+#nv .xb[aria-selected=true]{padding:0 12px}
+#nv .xb .l{display:none}
+.dk{padding:18px}.tgl{grid-template-columns:1fr}
+.sc-top{gap:14px}
+.sc-tiles{gap:8px}.mt{padding:11px 10px 12px}
+}
+
+/* ---------- chronicle additions ---------- */
+html{scroll-padding-top:150px}
+.part{display:flex;align-items:center;gap:14px;margin:34px 0 16px}
+.part:first-child{margin-top:8px}
+.part span{font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;padding:6px 13px;border-radius:999px;background:linear-gradient(135deg,#7C3AED,#5B21B6);color:#fff;box-shadow:0 8px 18px -10px rgba(124,58,237,.95)}
+.part b{font-size:15px;color:var(--tx)}.part::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--bd),transparent)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;filter:saturate(.6)}.btn:disabled::after{display:none}
+.xb.rdy{position:relative}.xb.rdy::after{content:"";position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:var(--gd);box-shadow:0 0 8px var(--gd)}
+/* vocabulary */
+.vtools{display:flex;align-items:center;gap:14px;margin-top:18px;flex-wrap:wrap}.vtools input{flex:1 1 280px;height:48px;border-radius:14px;font-size:15px}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:16px;margin-top:16px;align-items:start}
+.vc{padding:20px 20px 18px;border-radius:22px;transition:border-color .25s,transform .35s cubic-bezier(.3,1.4,.5,1),box-shadow .3s}
+.vc:hover{border-color:var(--ac2);box-shadow:0 20px 40px -24px var(--glow)}
+.vh{display:flex;align-items:center;gap:12px}.vh>div{flex:1;min-width:0}.vh h3{margin:0;font-size:20px}.vh .ipa{font-size:14.5px}
+.sayb{flex:none}
+.vm{margin:14px 0 4px;color:var(--tx);font-size:14.5px}.vm b{color:var(--gd)}.vv{margin:0;font-size:14.5px;border-left:3px solid var(--gd);padding-left:10px}
+.vc .sub2{margin:16px 0 8px}
+.syn{list-style:none;padding:0;display:grid;gap:6px}
+.syn li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;align-items:baseline;padding:8px 12px;border-radius:12px;background:var(--c2);cursor:pointer;transition:background .25s,transform .25s}
+.syn li:hover{background:rgba(139,92,246,.2);transform:translateX(3px)}
+.syn li b{color:var(--tx);font-size:14.5px}.syn li .ipa{font-size:12.5px;text-align:right}.syn li em{grid-column:1/-1;font-style:normal;font-size:13px;color:var(--mu)}
+.vnote{margin:12px 0 0;padding:10px 12px;border-radius:12px;background:var(--c2);font-size:13px}
+/* compact dock */
+#dock{position:fixed;left:0;right:0;top:var(--hh,68px);z-index:29;padding:8px 20px 0;pointer-events:none;opacity:0;transform:translateY(-16px) scale(.98);transition:opacity .35s,transform .5s cubic-bezier(.3,1.3,.5,1)}
+#dock.show{opacity:1;transform:none}
+.dk-bar{max-width:1040px;margin:0 auto;display:flex;align-items:center;gap:12px;padding:8px 12px 8px 8px;border:1px solid var(--bd);border-radius:18px;background:var(--hdr);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);box-shadow:0 16px 36px -18px rgba(0,0,0,.55)}
+#dock.show .dk-bar{pointer-events:auto}
+#dPlay{height:38px;padding:0 16px;border-radius:12px}
+#dPlay .is{display:none}#dPlay[aria-pressed=true] .is{display:block}#dPlay[aria-pressed=true] .ip{display:none}
+#dPlay[aria-pressed=true]{background:linear-gradient(135deg,#EF4444,#B91C1C);box-shadow:0 10px 22px -12px rgba(220,38,38,.9)}
+.xp.mini{flex-wrap:nowrap;padding:3px;gap:2px;border-radius:14px}
+.xp.mini .xb{height:30px;min-width:40px;padding:0 10px;font-size:12.5px}
+.xp.mini .xb[aria-pressed=true]{padding:0 12px}
+.dch{display:flex;gap:6px;margin-left:auto}
+.chip.sm{height:34px;padding:0 12px;font-size:12.5px;border-radius:12px;gap:7px}.chip.sm::before{width:7px;height:7px}
+.dsc{display:flex;align-items:center;gap:10px;padding-left:12px;border-left:1px solid var(--bd)}
+#dN{max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12.5px;font-weight:700;color:var(--mu)}
+.ring.mini{width:38px;height:38px}.ring.mini b{width:29px;height:29px;font-size:12px}
+@media(max-width:820px){.dch{display:none}.dsc{margin-left:auto}}
+@media(max-width:560px){#dock{padding:6px 10px 0}#dN{display:none}.dk-bar{gap:8px}}
+/* results report */
+.rp{padding:0;overflow:hidden}
+.rp-hd{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;padding:28px;border-bottom:1px solid var(--bd);background:linear-gradient(160deg,var(--c2),var(--c1))}
+.rp-hd h2{margin:6px 0 4px}.rp-meta{display:grid;gap:3px;text-align:right;font-size:14px;color:var(--mu);align-content:start}.rp-meta b{font-size:19px;color:var(--tx)}
+.rp-st{justify-self:end;margin-top:6px;padding:4px 12px;border-radius:999px;border:1px solid var(--bd);font-size:12.5px;font-weight:800}.rp-st.ok{color:var(--ok);border-color:var(--ok)}
+.rp-body{padding:26px 28px;display:grid;gap:28px}.rp-body h3{margin-bottom:12px}
+.kpis{display:grid;grid-template-columns:1.5fr repeat(4,1fr);gap:12px}
+.kpi{border:1px solid var(--bd);border-radius:18px;padding:14px 16px;background:var(--c1);min-width:0}
+.kpi .cap{margin-bottom:6px}.kpi b{display:block;font-size:26px;line-height:1.15;font-variant-numeric:tabular-nums;color:var(--tx)}.kpi small{color:var(--mu);font-size:12.5px}
+.kpi.main{display:flex;align-items:center;gap:14px}.kpi.main b{font-size:20px}.kpi.main .ring b{display:grid;width:76px;height:76px;font-size:26px;margin:0}
+.rt{min-width:640px}.rt td:first-child{color:var(--gd);font-weight:800}.rt-l{color:var(--tx);font-size:14px}
+.spl{display:inline-block;min-width:46px;text-align:center;padding:3px 10px;border-radius:999px;font-weight:800;font-size:13px;border:1px solid var(--bd);font-variant-numeric:tabular-nums}
+.spl.g{color:var(--ok);border-color:var(--ok)}.spl.m{color:var(--gd);border-color:var(--gd)}.spl.b{color:var(--no);border-color:var(--no)}.spl.n{color:var(--mu)}
+.rp-two{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.wk{display:flex;flex-wrap:wrap;gap:8px}.wk span{padding:5px 12px;border-radius:999px;border:1px solid var(--no);color:var(--no);font-weight:650;font-size:13.5px}.wk em{font-style:normal;opacity:.7}
+.sal{display:grid;gap:10px}.sal>div{display:grid;grid-template-columns:90px 1fr 36px;gap:12px;align-items:center;font-size:14px;color:var(--mu)}.sal b{color:var(--tx);text-align:right}
+.sig{display:grid;grid-template-columns:2fr 1fr;gap:24px}.sig>div{height:64px;border-bottom:1px dashed var(--mu);display:flex;align-items:flex-start}.sig small{color:var(--mu);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.rp-ft{margin:0}
+.rp-act{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:20px 28px 26px;border-top:1px solid var(--bd)}.rp-act .big{width:auto;min-width:200px;padding:0 28px}
+@media(max-width:820px){.kpis{grid-template-columns:1fr 1fr}.kpi.main{grid-column:1/-1}.rp-two{grid-template-columns:1fr}.rp-hd,.rp-body,.rp-act{padding-left:20px;padding-right:20px}.rp-meta{text-align:left}.rp-st{justify-self:start}}
+
+.pos{display:block;margin-top:3px;font-size:12.5px;color:var(--mu);font-weight:500}
+.sint{margin:0 0 8px;font-size:13px;line-height:1.5;color:var(--mu)}
+.coll{display:flex;flex-wrap:wrap;gap:6px}
+.coll span{padding:5px 11px;border-radius:999px;border:1px solid var(--bd);background:var(--c1);font-size:13px;font-weight:600;color:var(--tx);cursor:pointer;transition:border-color .2s,background .2s,transform .25s}
+.coll span:hover{border-color:var(--ac2);background:rgba(139,92,246,.14);transform:translateY(-1px)}
+.ex{margin-top:16px;padding:12px 14px;border-radius:14px;border:1px solid var(--bd);border-left:3px solid var(--ac2);background:var(--c2);cursor:pointer;transition:background .25s}
+.ex:hover{background:rgba(139,92,246,.16)}.ex .cap{margin-bottom:6px}
+.ex b{display:block;color:var(--tx);font-size:14.5px;font-weight:600;line-height:1.5}.ex em{display:block;margin-top:4px;font-style:normal;font-size:13px;color:var(--mu)}
+@media print{#p5 .rp-body{gap:7px!important;padding:8px 16px!important}#p5 .rt td,#p5 .rt th{padding:1.5px 8px!important}#p5 .rt-l{font-size:8pt}#p5 .rp-hd{padding:8px 16px!important}#p5 .kpi{padding:5px 8px}#p5 .kpi b{font-size:15pt}#p5 .sig>div{height:16px}#p5 .rp-two{gap:12px!important}#p5 .rp-ft{font-size:7.5pt}#p5 h3{margin-bottom:4px}.wk span{padding:3px 9px}.spl{padding:1px 8px}}
+
+.vgrid{grid-template-columns:repeat(auto-fill,minmax(min(100%,460px),1fr))}
+.vl{margin:8px 0 0;padding-left:20px;color:var(--tx);font-size:14.5px;line-height:1.6}.vl li{margin:2px 0;color:var(--tx)}.vl li::marker{color:var(--gd)}
+.diffl{list-style:none;padding:0;display:grid;gap:6px}
+.diffl li{padding:8px 12px;border-radius:12px;border-left:3px solid var(--gd);background:var(--c2);font-size:14px;line-height:1.5;color:var(--tx)}
+.vc .vnote{line-height:1.55}.vc .syn li:not(:has(.ipa)){grid-template-columns:1fr}
+</style>
+</head>
+<body class="locked">
+<div id="spb" aria-hidden="true"></div>
+<div class="bg" aria-hidden="true"><i></i><i></i></div>
+<header id="hd"><div class="hw">
+<span class="brand"><b>AURELIA</b> ACADEMY</span>
+<nav id="nv" class="xp" role="tablist" aria-label="Sections" hidden>
+<button class="xb" role="tab" aria-selected="true" data-p="0" aria-label="Overview" title="Overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span class="l"><span>Overview</span></span></button>
+<button class="xb" role="tab" aria-selected="false" data-p="1" aria-label="Practice" title="Practice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 15v-3a8 8 0 0 1 16 0v3"/><rect x="3" y="14" width="4" height="7" rx="1.5"/><rect x="17" y="14" width="4" height="7" rx="1.5"/></svg><span class="l"><span>Practice</span></span></button>
+<button class="xb" role="tab" aria-selected="false" data-p="2" aria-label="Dictation" title="Dictation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg><span class="l"><span>Dictation</span></span></button>
+<button class="xb" role="tab" aria-selected="false" data-p="3" aria-label="Reference" title="Reference"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5V21h16v-4"/></svg><span class="l"><span>Reference</span></span></button>
+<button class="xb" role="tab" aria-selected="false" data-p="4" aria-label="Record" title="Record"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></svg><span class="l"><span>Record</span></span></button>
+<button class="xb" role="tab" aria-selected="false" data-p="5" aria-label="Results" title="Results"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 12l2.5 2.5L16 9"/></svg><span class="l"><span>Results</span></span></button>
+</nav>
+<div class="hr">
+<button class="uchip" id="uc" hidden title="Change candidate name"><span class="av" id="av">?</span><span class="un" id="un"></span></button>
+<button class="tb" id="tbtn" role="switch" aria-checked="true" aria-label="Dark mode" title="Light / Dark"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+</div>
+</div></header>
+<div id="dock" role="region" aria-label="Quick controls" inert><div class="dk-bar">
+<button class="btn pri sm" id="dPlay" aria-pressed="false"><svg class="ip" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z"/></svg><svg class="is" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/></svg><span class="tx">Play all</span></button>
+<div class="xp mini" id="dSpd" role="group" aria-label="Speed"><button class="xb" data-s=".6" aria-pressed="false">0.6×</button><button class="xb" data-s=".8" aria-pressed="true">0.8×</button><button class="xb" data-s="1" aria-pressed="false">1×</button></div>
+<div class="dch" role="group" aria-label="Display options"><button class="chip sm" data-t="tI" aria-pressed="true">IPA</button><button class="chip sm" data-t="tV" aria-pressed="true">Translation</button><button class="chip sm" data-t="bl" aria-pressed="false">Hide English</button></div>
+<div class="dsc"><span id="dN"></span><div class="ring mini" id="dRg" style="--p:0"><b id="dM">—</b></div></div>
+</div></div>
+<main>
+<section class="pane" id="p0">
+<div class="gate">
+<div>
+<div class="eyebrow rv">Part 3 · British English · IPA · Shadowing</div>
+<h1 class="rv" style="--d:.1s">A Chronicle<em>of Timekeeping</em></h1>
+<p class="sub rv" style="--d:.22s">Mechanical clocks, hour systems and the escapement. Listen, repeat, dictate and record 8 British English sentences with IPA, word stress, pausing and a Vietnamese translation for every line.</p>
+<div class="stats stg" style="--d:.32s"><div class="stat"><b>8</b><span>Lines</span></div><div class="stat"><b>3</b><span>Speeds</span></div><div class="stat"><b>7</b><span>Key terms</span></div><div class="stat"><b>100</b><span>Points</span></div></div>
+<details class="how rv" style="--d:.55s"><summary>How your practice is scored</summary><ul>
+<li><b>Pronunciation:</b> record a line. Score = 80% word accuracy + 20% pace.</li>
+<li><b>Dictation:</b> type the line from its IPA. Score = % of correct words, minus 5 for each hint level.</li>
+<li>Your best score on each line is kept. The overall score is the average of the lines you have attempted.</li>
+<li>The Record part is for speaking practice and is not scored.</li>
+<li>Finish Pronunciation and Dictation for every line to unlock your PDF report on the Results page.</li></ul></details>
+</div>
+<form class="card cand rv" data-r="r" style="--d:.25s" id="gf" novalidate>
+<h2 id="gh">Candidate details</h2>
+<p id="gp">Enter your name to unlock all parts. Your progress is saved on this device.</p>
+<label class="fl" for="nm">Full name</label>
+<input type="text" id="nm" placeholder="e.g. Nguyen Van A" maxlength="40" autocomplete="name" aria-describedby="ge">
+<p class="err" id="ge" role="alert"></p>
+<button class="btn gold big" id="gs" type="submit"><span class="tl">Start practice</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+</form>
+</div>
+</section>
+
+<section class="pane" id="p1" hidden>
+<div class="card"><div class="eyebrow rv">Listen · IPA · Chunking</div>
+<h2 class="rv" style="--d:.08s">Sentence Practice</h2>
+<p class="legend rv" style="--d:.16s">British IPA. <b style="color:var(--st);border-bottom:2px solid var(--gd)">CAPITALS</b> = stressed syllable · <b style="color:var(--ac2)">/</b> = short pause · <b style="color:var(--ac2)">//</b> = long pause.</p>
+<div class="deck stg">
+<section class="dk" aria-label="Player">
+<div class="dk-h"><span class="cap">Player</span><span class="dk-n">British English · 10 sentences</span></div>
+<button class="btn pri big" id="aB" aria-pressed="false"><svg class="ip" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z"/></svg><svg class="is" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/></svg><span class="tx">Play all</span></button>
+<div class="fgrid">
+<div class="fld"><span class="cap">Speed</span><div class="xp fill" id="spd" role="group" aria-label="Speed"><button class="xb" data-s=".6" aria-pressed="false"><b>0.6×</b><span class="l"><span>Slow</span></span></button><button class="xb" data-s=".8" aria-pressed="true"><b>0.8×</b><span class="l"><span>Medium</span></span></button><button class="xb" data-s="1" aria-pressed="false"><b>1×</b><span class="l"><span>Normal</span></span></button></div></div>
+<div class="fld"><span class="cap">Voice</span><select id="vc" aria-label="Voice"></select></div>
+</div>
+<div class="fld"><span class="cap">Display</span><div class="tgl" role="group" aria-label="Display options"><button class="chip" id="tI" aria-pressed="true">IPA</button><button class="chip" id="tV" aria-pressed="true">Translation</button><button class="chip" id="bl" aria-pressed="false">Hide English</button></div></div>
+<p class="legend note">Voices come from your device: pick an en-GB "Natural" voice if available. In Hide English mode, tap a sentence to reveal it.</p>
+</section>
+<section class="dk dk-sc" aria-label="Scoreboard">
+<div class="dk-h"><span class="cap">Scoreboard</span><span class="who-chip"><i></i><span id="who">Guest</span></span></div>
+<div class="sc-top"><div class="ring" id="rg" style="--p:0"><b id="m3">—</b></div><div><strong>Overall score</strong><span class="big-s">out of 100</span><small id="stk"></small></div></div>
+<div class="sc-tiles stg">
+<div class="mt"><span>Pronunciation</span><b id="m1">—</b><div class="bar2"><i id="b1"></i></div></div>
+<div class="mt"><span>Dictation</span><b id="m2">—</b><div class="bar2"><i id="b2"></i></div></div>
+<div class="mt"><span>Progress</span><b id="m4">0/20</b><div class="bar2"><i id="b4"></i></div></div>
+</div>
+<button class="btn sm" id="rr">Reset progress</button>
+</section>
+</div>
+<div id="list"></div></div></section>
+
+<section class="pane" id="p2" hidden>
+<div class="card"><div class="eyebrow">Dictation</div><h2>IPA Dictation</h2>
+<p>Read the IPA and type the English sentence. After checking, each error is marked with colour and a label, with an explanation of why it is wrong and how to fix it.</p>
+<div class="xp" id="dn" role="group" aria-label="Choose a sentence"></div><div id="dbox"></div></div></section>
+
+<section class="pane" id="p3" hidden>
+<div class="card"><div class="eyebrow">Reference</div><h2>Vocabulary &amp; Synonyms</h2>
+<p>7 key terms from the passage, each with IPA, stress, part of speech, meaning, synonyms, key differences, collocations and an example. Tap any word, phrase or sentence to hear it.</p>
+<div class="vtools"><input type="text" id="vq" placeholder="Search a word, synonym or Vietnamese meaning…" aria-label="Search vocabulary" autocomplete="off"><span class="mut" id="vn"></span></div></div>
+<div class="vgrid" id="vg"></div>
+</section>
+
+<section class="pane" id="p4" hidden>
+<div class="card rv">
+<div class="eyebrow">Practice 04 · Speaking Reflection</div>
+<h2>Recording Studio</h2>
+<p>Choose a question, answer it aloud in English, then listen back. This part is for speaking practice only and is <b>not scored</b>.</p>
+<div class="qlist" id="ql" role="radiogroup" aria-label="Choose a question"></div>
+<div class="rec-panel">
+<div class="rp-top"><div><span class="cap">Selected</span><b id="qcur"></b></div><span class="tmr" id="qtm">00:00</span></div>
+<canvas class="wv" id="qwv" aria-hidden="true"></canvas>
+<div class="acts"><button class="btn pri" id="fr" aria-pressed="false"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></svg><span class="tx">Start recording</span></button><span class="mut" id="fmsg">Up to 3 minutes per take.</span></div>
+</div>
+<div id="ft"></div>
+</div>
+<div class="card rv" style="margin-top:16px"><div class="eyebrow">Reflection</div><h2>Self-Assessment</h2>
+<p>Listen back, then rate each skill from 1 (needs work) to 5 (excellent). Your result appears as soon as all four are rated.</p>
+<div id="sa" class="sa-grid stg"></div><div id="sr"></div></div>
+</section>
+<section class="pane" id="p5" hidden>
+<div class="card rp rv"><div id="rp"></div>
+<div class="rp-act noprint"><button class="btn gold big" id="pdf" disabled><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 11l5 5 5-5M4 20h16"/></svg><span>Save PDF</span></button><button class="btn" id="pdfp" hidden>Save partial report</button><span class="mut" id="pdfm"></span></div>
+</div>
+</section>
+</main>
+<div id="tt" role="status"></div>
+<footer><b>AURELIA ACADEMY</b>Contact: 0964 964 264 | Ms. Angie<br>© 2026 Aurelia Academy. All rights reserved.</footer>
+<script>
+const D=[
+["The ADvent of the meCHANical CLOCK / meant that alTHOUGH it could be adJUSTed to mainTAIN TEMporal HOURS, / it was NATurally SUITed to KEEPing EQual ones. //","/ði ˈædvent əv ðə məˈkænɪkəl klɒk ment ðət ɔːlˈðəʊ ɪt kəd bi əˈdʒʌstɪd tə meɪnˈteɪn ˈtempərəl ˈaʊəz, ɪt wəz ˈnætʃrəli ˈsuːtɪd tə ˈkiːpɪŋ ˈiːkwəl wʌnz/","Sự ra đời của đồng hồ cơ học có nghĩa là mặc dù nó có thể được điều chỉnh để duy trì giờ giấc theo thời gian, nhưng về bản chất, nó phù hợp với việc giữ cho các khoảng thời gian bằng nhau."],
+["With these, howEVer, aROSE the QUEStion / of when to beGIN COUNTing, / and so, in the EARly fourTEENTH CENtury, / a NUMber of SYStems eVOLVED. //","/wɪð ðiːz, haʊˈevə, əˈrəʊz ðə ˈkwestʃən əv wen tə bɪˈɡɪn ˈkaʊntɪŋ, ən səʊ, ɪn ði ˈɜːli ˌfɔːˈtiːnθ ˈsentʃəri, ə ˈnʌmbər əv ˈsɪstəmz ɪˈvɒlvd/","Tuy nhiên, cùng với những điều này, câu hỏi về thời điểm bắt đầu tính giờ đã nảy sinh, và vì vậy, vào đầu thế kỷ 14, một số hệ thống đã phát triển."],
+["The SCHEMES that diVIDed the DAY / into twenty-FOUR EQual PARTS / VARied acCORDing to the START of the COUNT: / ITALian HOURS began at SUNset, / BabyLONian HOURS at SUNrise, / astroNOMical HOURS at MIDday / and 'great CLOCK' HOURS, / used for some large PUBlic CLOCKS in GERmany, / at MIDnight. //","/ðə skiːmz ðət dɪˈvaɪdɪd ðə deɪ ˌɪntə ˌtwenti ˈfɔːr ˈiːkwəl pɑːts ˈveərid əˈkɔːdɪŋ tə ðə stɑːt əv ðə kaʊnt: ɪˈtæliən ˈaʊəz bɪˈɡæn ət ˈsʌnset, ˌbæbɪˈləʊniən ˈaʊəz ət ˈsʌnraɪz, ˌæstrəˈnɒmɪkəl ˈaʊəz ət ˌmɪdˈdeɪ ən ˌɡreɪt ˈklɒk ˈaʊəz, juːzd fə səm lɑːdʒ ˈpʌblɪk klɒks ɪn ˈdʒɜːməni, ət ˈmɪdnaɪt/","Các hệ thống chia một ngày thành 24 phần bằng nhau khác nhau tùy theo thời điểm bắt đầu tính giờ: giờ kiểu Ý bắt đầu vào lúc hoàng hôn, giờ kiểu Babylon bắt đầu vào lúc bình minh, giờ thiên văn bắt đầu vào giữa trưa và giờ theo đồng hồ lớn, được sử dụng cho một số đồng hồ công cộng lớn ở Đức, bắt đầu vào lúc nửa đêm."],
+["EVENtually / these were superSEDED by 'small CLOCK', / or FRENCH HOURS, / which SPLIT the DAY into two twelve-hour PERiods / comMENCing at MIDnight. //","/ɪˈventʃuəli ðiːz wə ˌsuːpəˈsiːdɪd baɪ ˌsmɔːl ˈklɒk, ɔː ˈfrentʃ ˈaʊəz, wɪtʃ splɪt ðə deɪ ˈɪntə tuː ˌtwelv aʊə ˈpɪəriədz kəˈmensɪŋ ət ˈmɪdnaɪt/","Cuối cùng, những hệ thống này đã được thay thế bởi hệ thống 'đồng hồ nhỏ', hay còn gọi là giờ kiểu Pháp, chia một ngày thành hai khoảng thời gian, mỗi khoảng kéo dài 12 giờ, bắt đầu từ nửa đêm."],
+["The EARliest reCORDed WEIGHT-driven meCHANical CLOCK / was BUILT in 1283 / in BEDfordshire, ENGland. //","/ði ˈɜːliɪst rɪˈkɔːdɪd ˈweɪt ˌdrɪvən məˈkænɪkəl klɒk wəz bɪlt ɪn ˌtwelv ˌeɪti ˈθriː ɪn ˈbedfədʃə ˈɪŋɡlənd/","Chiếc đồng hồ cơ học chạy bằng trọng lượng đầu tiên được ghi nhận đã được chế tạo vào năm 1283 tại hạt Bedfordshire, nước Anh."],
+["The revoLUtionary ASpect of this new TIMEkeeper / was NEIther the deSCENDing WEIGHT / that proVIDed its MOtive FORCE / nor the GEAR WHEELS / (which had been aROUND for at least one thousand three hundred YEARS) / that transFERRED the POWer; / It was the PART called the esCAPement. //","/ðə ˌrevəˈluːʃənəri ˈæspekt əv ðɪs njuː ˈtaɪmˌkiːpə wəz ˈnaɪðə ðə dɪˈsendɪŋ weɪt ðət prəˈvaɪdɪd ɪts ˈməʊtɪv fɔːs nɔː ðə ˈɡɪə wiːlz (wɪtʃ həv bɪn əˈraʊnd fə ət liːst wʌn ˈθaʊzənd θriː ˈhʌndrəd jɪəz) ðət trænsˈfɜːd ðə ˈpaʊə; ɪt wəz ðə pɑːt kɔːld ði ɪˈskeɪpmənt/","Điểm mang tính cách mạng của chiếc máy đo thời gian mới này không phải là quả nặng đi xuống, thứ cung cấp lực truyền động cho nó, cũng không phải là các bánh răng (vốn đã tồn tại ít nhất 1.300 năm) truyền tải năng lượng; mà chính là bộ phận được gọi là bộ thoát (escapement)."],
+["In the EARly fourTEENTH CENtury / came the inVENtion of the COILED SPRING or fuSEE, / which mainTAINED CONstant FORCE to the GEAR WHEELS of the TIMEkeeper / deSPITE the CHANGing TENsion of its MAINspring. //","/ɪn ði ˈɜːli ˌfɔːˈtiːnθ ˈsentʃəri keɪm ði ɪnˈvenʃən əv ðə kɔɪld sprɪŋ ɔː ˈfjuːziː wɪtʃ meɪnˈteɪnd ˈkɒnstənt fɔːs tə ðə ɡɪə wiːlz əv ðə ˈtaɪmˌkiːpə dɪˈspaɪt ðə ˈtʃeɪndʒɪŋ ˈtenʃən əv ɪts ˈmeɪnˌsprɪŋ/","Vào đầu thế kỷ 14, người ta đã phát minh ra lò xo cuộn hoặc bộ truyền lực hình nón (fusee), bộ phận duy trì lực không đổi cho các bánh răng của đồng hồ, bất chấp sự thay đổi về sức căng của dây cót chính."],
+["By the sixTEENTH CENtury, / a PENdulum CLOCK had been deVISED, / but the PENdulum SWUNG in a large ARC / and thus was not very efFIcient. //","/baɪ ðə ˌsɪksˈtiːnθ ˈsentʃəri, ə ˈpendjələm klɒk həd bɪn dɪˈvaɪzd, bət ðə ˈpendjələm swʌŋ ɪn ə lɑːdʒ ɑːk ən ðʌs wəz nɒt ˈveri ɪˈfɪʃənt/","Đến thế kỷ 16, đồng hồ quả lắc đã được chế tạo, nhưng quả lắc dao động theo một cung tròn lớn và do đó không hoạt động hiệu quả lắm."]];
+const PH={};
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],N=D.length,KEY='apr3:'+document.title,LB=i=>String(i+1).padStart(2,'0'),NM=i=>'Sentence '+(i+1);
+const IC={play:'<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z"/></svg>',mic:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></svg>',loop:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4"/><path d="M21 13v2a3 3 0 0 1-3 3H3"/></svg>'};
+const nw=t=>t.replace(/\b1,?283\b/g,'twelve eighty three').replace(/\b1,?300\b/g,'one thousand three hundred').replace(/\b24\b/g,'twenty four').replace(/\b12\b/g,'twelve').replace(/\b14th\b/gi,'fourteenth').replace(/\b16th\b/gi,'sixteenth').toLowerCase().replace(/[’‘]/g,"'").replace(/-/g,' ').replace(/[^a-z' ]+/g,' ').split(/\s+/).map(w=>w.replace(/^'+|'+$/g,'')).filter(Boolean);
+const W=D.map(d=>{const tk=d[0].replace(/\//g,' ').replace(/\b1283\b/g,'twelve eighty three').replace(/-/g,' ').split(/\s+/).filter(Boolean),ip=d[1].replace(/\//g,' ').split(/\s+/).filter(Boolean),o=[];tk.forEach((t,j)=>nw(t).forEach(w=>o.push({w,tok:t,ipa:ip[j]||''})));return o});
+const fmt=t=>t.split(' ').map(w=>w==='/'||w==='//'?'<i>'+w+'</i>':w.replace(/[A-Z]+/g,(m,o)=>m.length>1||o>0?'<b>'+m+'</b>':m)).join(' ');
+const caps=t=>{let r='';t.replace(/[A-Z]+/g,(m,o)=>{if(!r&&(m.length>1||o>0))r=m;return m});return r};
+const lab=s=>s>=90?'Excellent':s>=75?'Good':s>=60?'Fair':'Keep practising';
+const hist=(p,s,n)=>'Attempt '+n+': '+(p==null?'first score.':s>p?'up '+(s-p)+' from your best ('+p+').':s===p?'equal to your best ('+p+').':'below your best ('+p+'), try again.');
+const FW=new Set('a an the to of and in on at for with by from that than as is are be it its but or so such not who how what when into over under about'.split(' '));
+const PAIRS=[['arise','arouse','Arise /əˈraɪz/ (nảy sinh) và arouse /əˈraʊz/ (khơi dậy) khác nguyên âm đôi: /aɪ/ so với /aʊ/.'],
+['evolve','involve','Evolve /ɪˈvɒlv/ bắt đầu bằng /ɪ/; involve /ɪnˈvɒlv/ bắt đầu bằng /ɪn/. Cả hai nhấn âm tiết thứ hai.'],
+['commence','comment','Commence /kəˈmens/ nhấn âm tiết thứ hai và kết thúc bằng /ens/; comment /ˈkɒment/ nhấn âm tiết đầu.'],
+['astronomical','economical','Astronomical /ˌæstrəˈnɒmɪkəl/ và economical /ˌiːkəˈnɒmɪkəl/ giống phần cuối /ˈnɒmɪkəl/ nhưng khác phần đầu.'],
+['divide','device','Divide /dɪˈvaɪd/ kết thúc bằng /d/ hữu thanh; device /dɪˈvaɪs/ kết thúc bằng /s/ vô thanh.'],
+['weight','wait','Weight (trọng lượng) và wait (chờ đợi) đồng âm /weɪt/; hãy phân biệt qua ngữ cảnh và cách viết.'],
+['pendulum','pending','Pendulum /ˈpendjələm/ có 3 âm tiết với /dj/ ở giữa; pending /ˈpendɪŋ/ chỉ có 2 âm tiết.'],
+['supersede','precede','Supersede /ˌsuːpəˈsiːd/ nhấn chính ở âm tiết cuối /siːd/ và có trọng âm phụ ở /suː/; precede /prɪˈsiːd/ chỉ nhấn /siːd/.']];
+const TIPS=[[/tʃ/,'Âm /tʃ/: bật hơi như "ch" trong chair.'],[/dʒ/,'Âm /dʒ/: như /tʃ/ nhưng rung dây thanh.'],[/θ/,'Âm /θ/: đặt đầu lưỡi giữa hai hàm răng, thổi hơi nhẹ, dây thanh không rung.'],[/ð/,'Âm /ð/: đặt lưỡi như /θ/ nhưng rung dây thanh.'],[/ʃ/,'Âm /ʃ/: chu môi nhẹ, hơi ra liên tục như "sh".'],[/ʒ/,'Âm /ʒ/: giống /ʃ/ nhưng rung dây thanh.'],[/ɜː/,'Âm /ɜː/: môi thả lỏng, lưỡi ở giữa, kéo dài; giọng Anh-Anh không cuộn lưỡi.'],[/ɒ/,'Âm /ɒ/: tròn môi, mở miệng, đọc ngắn.'],[/ŋ/,'Âm /ŋ/: cuối lưỡi chạm vòm mềm, không thêm âm /g/ rõ ràng.'],[/əʊ/,'Âm /əʊ/: bắt đầu bằng /ə/ rồi tròn môi dần sang /ʊ/.'],[/eə/,'Âm /eə/: bắt đầu bằng /e/ rồi trượt về /ə/.'],[/ɪ/,'Âm /ɪ/: ngắn và lỏng, nằm giữa /i/ và /e/ (khác /iː/ kéo dài).']];
+const lev=(a,b)=>{const d=[...Array(a.length+1)].map((_,i)=>[i,...Array(b.length).fill(0)]);for(let j=1;j<=b.length;j++)d[0][j]=j;for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[a.length][b.length]};
+const pair=(w,h)=>{const p=PAIRS.find(q=>(q[0]===w&&q[1]===h)||(q[0]===h&&q[1]===w));return p&&p[2]};
+function align(a,b){const n=a.length,m=b.length,d=Array.from({length:n+1},(_,i)=>Array.from({length:m+1},(_,j)=>i?(j?0:i):j));
+for(let i=1;i<=n;i++)for(let j=1;j<=m;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
+let i=n,j=m;const r=[];while(i>0||j>0){const q=i&&j&&a[i-1]===b[j-1]?0:1;
+if(i&&j&&d[i][j]===d[i-1][j-1]+q){r.unshift({w:a[i-1],h:b[j-1],k:i-1,ok:!q});i--;j--}else if(i&&d[i][j]===d[i-1][j]+1){r.unshift({w:a[i-1],k:i-1,miss:1});i--}else{r.unshift({h:b[j-1],extra:1});j--}}return r}
+function diag(i,x){const m=W[i][x.k]||{w:x.w,tok:x.w,ipa:''},ip=m.ipa.replace(/[ˈˌ]/g,''),stress=caps(m.tok),multi=stress&&/ˈ/.test(m.ipa)&&stress.length<m.tok.replace(/[^A-Za-z]/g,'').length;let why,fix;
+if(x.miss){if(FW.has(x.w)){why='Bạn bỏ sót từ chức năng "'+x.w+'". Loại từ này đọc rất nhẹ nên dễ bị nuốt mất.';fix='Vẫn phải phát ra, đọc yếu '+m.ipa+' và nối liền với từ đứng trước hoặc sau.'}
+else{why='Bạn bỏ sót từ nội dung "'+x.w+'" (máy không nghe thấy).';fix='Đọc chậm lại theo từng cụm ngắt nghỉ và đọc rõ '+m.ipa+(multi?', nhấn ở âm tiết viết hoa của "'+m.tok+'"':'')+'.'}}
+else{const pr=pair(x.w,x.h);if(pr){why='Bạn đọc thành "'+x.h+'" thay vì "'+x.w+'" (hai từ dễ nhầm).';fix=pr}
+else{const sf=x.h.startsWith(x.w)?x.h.slice(x.w.length):x.w.startsWith(x.h)?x.w.slice(x.h.length):'#';
+if(/^(s|es|ed|d|ing|ly)$/.test(sf)){why='Âm cuối chưa đúng: máy nghe "'+x.h+'", từ đúng là "'+x.w+'".';fix='Đọc rõ âm cuối của '+m.ipa+' (các âm /s/, /z/, /t/, /d/, /ɪŋ/), đừng bỏ lửng cuối từ.'}
+else if(lev(x.w,x.h)<=2||x.w.slice(0,3)===x.h.slice(0,3)){why='Máy nghe thành "'+x.h+'", gần giống "'+x.w+'" nhưng có âm bị lệch (thường là nguyên âm hoặc trọng âm).';fix='Bấm vào từ để nghe mẫu, đối chiếu '+m.ipa+(multi?' và nhấn mạnh âm tiết viết hoa của "'+m.tok+'", các âm tiết còn lại đọc nhẹ.':'.')}
+else{why='Máy nghe thành "'+x.h+'", rất khác từ đúng "'+x.w+'": có thể bạn nhầm từ hoặc phát âm lệch nhiều.';fix='Nhìn IPA '+m.ipa+', tách thành từng âm tiết, nghe mẫu ở 0.6× rồi đọc theo.'}}}
+const tips=TIPS.filter(t=>t[0].test(ip)).slice(0,2).map(t=>t[1]).join(' ');
+return `<div class="dg"><div class="dh"><b class="wd" data-w="${x.w}">${x.w}</b> <span class="ipa2">${m.ipa}</span>${x.miss?'<span class="mut"> (missed)</span>':'<span class="mut"> (heard: '+x.h+')</span>'}</div><p><b>Why:</b> ${why}</p><p><b>Fix:</b> ${fix}${tips?' '+tips:''}</p></div>`}
+/* storage */
+let S={best:{},tries:{},weak:{},dict:{},dtries:{},days:[]};try{S=Object.assign(S,JSON.parse(localStorage.getItem(KEY)||'{}'))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const ds=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const stamp=()=>{const t=ds(new Date());if(!S.days.includes(t)){S.days.push(t);S.days=S.days.slice(-90)}};
+function streak(){const s=new Set(S.days);let n=0,d=new Date();if(!s.has(ds(d)))d.setDate(d.getDate()-1);while(s.has(ds(d))){n++;d.setDate(d.getDate()-1)}return n}
+/* practice list */
+$('#list').innerHTML=D.map((d,i)=>(PH[i]?`<div class="part rv"><span>${PH[i][0]}</span><b>${PH[i][1]}</b></div>`:'')+`<article class="card sent rv"><div class="no">${LB(i)}</div><div class="bd"><div class="en">${fmt(d[0])}</div><div class="ipa">${d[1]}</div><div class="vi">${d[2]}</div>${d[3]?`<div class="vi nt">${d[3]}</div>`:''}<div class="acts"><button class="btn pri sm" data-say="${i}">${IC.play}<span>Listen</span></button><button class="btn sm" data-loop="${i}">${IC.loop}<span>Listen ×3</span></button><button class="btn sm" data-rec="${i}">${IC.mic}<span class="tl">Record</span></button><span class="best"></span></div><div class="rz"></div></div></article>`).join('');
+let SP=.8,rcur=null,DL=null,voice,VOICES=[],sid=0;const blobs={},cards=()=>$$('#list .sent'),hasTTS='speechSynthesis' in window;
+const tog=b=>{const v=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',v);return v};
+const rl=(b,t)=>{const x=b.querySelector('.tl');if(x)x.textContent=t;else b.textContent=t};
+const vscore=v=>(/en[-_]GB/i.test(v.lang)?100:/^en/i.test(v.lang)?40:0)+(/natural|neural|online/i.test(v.name)?60:0)+(/google uk english/i.test(v.name)?30:0)+(/sonia|libby|ryan|maisie|thomas|serena|daniel|kate|martha|oliver|arthur/i.test(v.name)?25:0);
+function loadVoices(){if(!hasTTS)return;VOICES=speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang)).sort((a,b)=>vscore(b)-vscore(a));const sel=$('#vc');sel.innerHTML=VOICES.length?VOICES.map((v,i)=>`<option value="${v.name}">${v.name} (${v.lang})${i?'':' - recommended'}</option>`).join(''):'<option>No English voice on this device</option>';if(S.voice&&VOICES.some(v=>v.name===S.voice))sel.value=S.voice;voice=VOICES.find(v=>v.name===sel.value)||VOICES[0]}
+if(hasTTS){loadVoices();speechSynthesis.onvoiceschanged=loadVoices}else $('#vc').innerHTML='<option>Speech is not supported on this device</option>';
+function stopSpeech(){sid++;if(hasTTS)speechSynthesis.cancel()}
+function utter(t,r,end){const u=new SpeechSynthesisUtterance(t);u.lang='en-GB';if(voice){u.voice=voice;u.lang=voice.lang}u.rate=r;u.pitch=1;if(end){u.onend=end;u.onerror=end}speechSynthesis.speak(u)}
+function resetAll(){const b=$('#aB');if(b.getAttribute('aria-pressed')==='true'){b.setAttribute('aria-pressed','false');b.querySelector('.tx').textContent='Play all'}hl(-1)}
+function say(t,r,end){if(!hasTTS){toast('Speech is not supported on this device.');return}stopSpeech();const my=sid;utter(t,r,end?()=>{if(my===sid)end()}:null)}
+function sayS(i,r,end){if(!hasTTS){toast('Speech is not supported on this device.');return}stopSpeech();const my=sid,ch=[];
+D[i][0].replace(/([^\/]+)(\/*)/g,(m,t,s)=>{ch.push([t.trim().replace(/’/g,"'").toLowerCase().replace(/\bi\b/g,'I'),s.length>1?650:s.length?280:0])});
+const nx=k=>{if(my!==sid)return;if(k>=ch.length){end&&end();return}utter(ch[k][0],r,()=>{if(my!==sid)return;setTimeout(()=>nx(k+1),ch[k][1]/r)})};nx(0)}
+$('#vc').onchange=()=>{voice=VOICES.find(v=>v.name===$('#vc').value);if(voice){S.voice=voice.name;save();say('Integrity matters more than applause.',SP)}};
+function toast(m){const t=$('#tt');t.textContent=m;t.style.display='block';clearTimeout(toast.k);toast.k=setTimeout(()=>t.style.display='none',3200)}
+if(window.claude&&claude.use)claude.use('downloads').then(x=>{DL=x}).catch(()=>{});
+function hl(i,sc){cards().forEach((c,k)=>c.classList.toggle('cur',k===i));const c=cards()[i];if(c&&sc!==false)c.scrollIntoView({block:'center',behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});return i}
+SP=S.sp||.8;$$('#spd .xb').forEach(b=>{b.setAttribute('aria-pressed',String(+b.dataset.s===SP));b.onclick=()=>{SP=+b.dataset.s;S.sp=SP;save();$$('#spd .xb').forEach(x=>x.setAttribute('aria-pressed',String(x===b)))}});
+$('#tI').onclick=function(){$('#list').classList.toggle('hide-ipa',!tog(this))};
+$('#tV').onclick=function(){$('#list').classList.toggle('hide-vi',!tog(this))};
+$('#bl').onclick=function(){$('#list').classList.toggle('blind',tog(this))};
+$('#list').addEventListener('click',e=>{const en=e.target.closest('.en');if(en&&$('#list').classList.contains('blind'))en.classList.toggle('show')});
+$('#aB').onclick=function(){const on=this.getAttribute('aria-pressed')==='true',tx=this.querySelector('.tx');if(on){hl(-1);stopSpeech();this.setAttribute('aria-pressed','false');tx.textContent='Play all';return}
+this.setAttribute('aria-pressed','true');tx.textContent='Stop';let i=0;const n=()=>{if(this.getAttribute('aria-pressed')!=='true')return;if(i>=N){this.click();return}sayS(hl(i++),SP,()=>setTimeout(n,500))};n()};
+function wave(st,cv,tm){const AC=window.AudioContext||window.webkitAudioContext;if(!AC||!cv)return()=>{};
+const ac=new AC(),an=ac.createAnalyser();an.fftSize=1024;if(ac.state==='suspended')ac.resume();ac.createMediaStreamSource(st).connect(an);
+const dpr=window.devicePixelRatio||1;cv.width=cv.clientWidth*dpr;cv.height=cv.clientHeight*dpr;
+const g=cv.getContext('2d'),buf=new Uint8Array(an.fftSize),n=64,hs=new Array(n).fill(0),t0=Date.now();let on=true,raf,peak=0,sec=-1;
+const gr=g.createLinearGradient(0,0,cv.width,0);gr.addColorStop(0,'#8B5CF6');gr.addColorStop(1,'#D4B26A');
+const draw=()=>{if(!on)return;raf=requestAnimationFrame(draw);an.getByteTimeDomainData(buf);let s=0;for(let k=0;k<buf.length;k++){const x=(buf[k]-128)/128;s+=x*x}
+const r=Math.min(1,Math.sqrt(s/buf.length)*3.5);peak=Math.max(peak,r);hs.push(r);hs.shift();
+const w=cv.width,h=cv.height,bw=w/n;g.clearRect(0,0,w,h);g.fillStyle=gr;
+for(let k=0;k<n;k++){const bh=Math.max(4*dpr,hs[k]*h*.9);g.fillRect(k*bw+bw*.2,(h-bh)/2,bw*.6,bh)}
+const sc=Math.floor((Date.now()-t0)/1000);if(sc!==sec&&tm){sec=sc;tm.textContent=String(Math.floor(sc/60)).padStart(2,'0')+':'+String(sc%60).padStart(2,'0')+(sc>=3&&peak<.04?'  no sound detected, check your microphone':'')}};
+draw();return()=>{on=false;cancelAnimationFrame(raf);try{ac.close()}catch(e){}}}
+/* pronunciation recording + grading */
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(!SR)$('#list').insertAdjacentHTML('beforebegin','<p class="legend">This browser has no speech recognition: you can still record, download and compare by ear. Automatic scoring needs Chrome, Edge or Safari.</p>');
+function toggleRec(i){if(rcur&&rcur.mr.state==='recording'){const same=rcur.i===i;rcur.mr.stop();if(same)return}startRec(i)}
+async function startRec(i){stopSpeech();resetAll();const c=cards()[i],rz=c.querySelector('.rz'),btn=c.querySelector('.acts [data-rec]');let st;
+try{st=await navigator.mediaDevices.getUserMedia({audio:true})}catch(e){rz.innerHTML='<div class="rzb">Cannot access the microphone. Allow microphone access for this page and try again.</div>';return}
+const mr=new MediaRecorder(st),ch=[],t0=Date.now();let heard='',rc=null,base='',err='',live=true,stopW=null,at=null;
+mr.ondataavailable=e=>e.data.size&&ch.push(e.data);
+if(SR){try{rc=new SR();rc.lang='en-GB';rc.continuous=true;rc.interimResults=true;rc.onresult=e=>{let t='';for(const r of e.results)t+=' '+r[0].transcript;heard=base+t};rc.onerror=e=>{err=e.error||'error'};rc.onend=()=>{if(live&&!/not-allowed|audio-capture|language/.test(err)){base=heard;try{rc.start()}catch(x){}}};rc.start()}catch(e){rc=null}}
+mr.onstop=()=>{stopW&&stopW();clearTimeout(at);rz.innerHTML='<div class="rzb" role="status">Scoring…</div>';st.getTracks().forEach(t=>t.stop());rl(btn,S.tries[i]?'Re-record':'Record');btn.classList.remove('rec');btn.classList.add('pri');const dur=(Date.now()-t0)/1000,blob=new Blob(ch,{type:mr.mimeType});live=false;let d=0;const fin=()=>{if(!d){d=1;grade(i,blob,heard,dur,!!rc,err)}};if(rc){rc.onend=fin;try{rc.stop()}catch(e){fin()}setTimeout(fin,2500)}else fin()};
+rcur={mr,i};mr.start();rl(btn,'Stop');btn.classList.add('rec');btn.classList.remove('pri');rz.innerHTML=`<div class="rzb" role="status">Recording… read the whole sentence, then press Stop to get your score.<canvas class="wv"></canvas><div class="acts"><span class="tmr">00:00</span><button class="btn rec sm" data-rec="${i}">Stop &amp; score</button></div></div>`;stopW=wave(st,rz.querySelector('canvas'),rz.querySelector('.tmr'));at=setTimeout(()=>{if(mr.state==='recording')mr.stop()},60000)}
+const why=e=>({'not-allowed':'The browser is blocking speech recognition. Open the page from an https link (not a local .html file) in Chrome or Edge and allow the microphone.','service-not-allowed':'The browser is blocking speech recognition. Open the page from an https link (not a local .html file) in Chrome or Edge.','network':'Cannot reach the browser speech service. Check your connection.','no-speech':'No speech detected. Speak louder and closer to the microphone.','audio-capture':'The microphone is busy or unavailable for speech recognition.','language-not-supported':'This browser does not support en-GB recognition.'})[e]||'Speech was not recognised. Speak clearly, closer to the microphone, and record again.';
+function grade(i,blob,heard,dur,hasSR,err){blobs[i]=blob;const rz=cards()[i].querySelector('.rz'),url=URL.createObjectURL(blob),ext=/mp4|webm/.test(blob.type);
+const tools=`<div class="acts"><button class="btn pri sm" data-again="${i}">${IC.mic}<span>Record again</span></button><button class="btn sm" data-cmp="${i}">${IC.play}<span>Model, then mine</span></button>${ext?`<button class="btn sm" data-dl="${i}">Download</button>`:''}</div><audio controls src="${url}" style="margin-top:12px"></audio>`;
+const T=W[i].map(x=>x.w),H=nw(heard);
+if(!hasSR||!H.length){rz.innerHTML=`<div class="rzb"><p>${hasSR?why(err)+(err?' (code: '+err+')':''):'Automatic scoring is not available. Listen back, compare with the model and judge for yourself.'}</p>${tools}</div>`;return}
+const al=align(T,H),ok=al.filter(r=>r.ok).length,acc=ok/Math.max(T.length,H.length),pz=(D[i][0].match(/\//g)||[]).length,r=dur/(T.length*.4+pz*.2),pace=r<.6?r/.6:r>3?Math.max(0,1-(r-3)/3):1,sc=Math.round(80*acc+20*pace),bad=al.filter(x=>!x.ok&&!x.extra);
+bad.forEach(x=>S.weak[x.w]=(S.weak[x.w]||0)+1);const prev=S.best[i];S.tries[i]=(S.tries[i]||0)+1;S.best[i]=Math.max(prev||0,sc);stamp();save();
+const ws=al.filter(x=>!x.extra).map(x=>x.ok?`<span class="w ok" data-w="${x.w}">${x.w}<sup>OK</sup></span>`:x.miss?`<span class="w miss" data-w="${x.w}">${x.w}<sup>Missing</sup></span>`:`<span class="w bad" data-w="${x.w}">${x.w}<sup>Wrong</sup></span>`).join('');
+const dg=bad.slice(0,8).map(x=>diag(i,x)).join('')+(bad.length>8?`<p class="mut">${bad.length-8} more words to fix.</p>`:'');
+rz.innerHTML=`<div class="rzb"><div class="acts" style="margin:0 0 10px;gap:16px"><div class="ring" style="--p:${sc}"><b>${sc}</b></div><div><strong>${lab(sc)}</strong> · out of 100<br><small>Accuracy ${Math.round(80*acc)}/80 · Pace ${Math.round(20*pace)}/20</small><br><small>${hist(prev,sc,S.tries[i])}</small></div></div><p class="legend">OK = clear. Wrong = off target. Missing = skipped. Tap a word to hear the model.</p><div>${ws}</div>${dg?`<h4 class="sub2">Why it went wrong and how to fix it</h4>${dg}<p class="legend">The recogniser sometimes mishears. If you are sure you said it right, record once more.</p>`:'<p><strong>No word errors.</strong> Now compare stress and intonation with the model by ear.</p>'}<p class="legend" style="margin-top:10px">Heard: “${H.join(' ')}”. The score covers words and pace only; judge stress and intonation by ear.</p>${tools}</div>`;
+upd();renderScore()}
+function upd(){cards().forEach((c,k)=>{c.querySelector('.best').textContent=S.best[k]!=null?'Best '+S.best[k]+'/100'+(S.best[k]>=80?' · Passed':''):'';const rb=c.querySelector('.acts [data-rec]');if(rb&&S.tries[k]&&!rb.classList.contains('rec'))rl(rb,'Re-record')})}
+/* dictation */
+let di=0,dhint=0;
+function dnav(){$('#dn').innerHTML=D.map((d,i)=>`<button class="xb" data-d="${i}" aria-pressed="${i===di}" aria-label="${NM(i)}"><b>${i+1}</b><span class="l"><span>${NM(i)}${S.dict[i]!=null?' · '+S.dict[i]:''}</span></span>${S.dict[i]!=null?'<i class="dt"></i>':''}</button>`).join('')}
+function drender(){dnav();dhint=0;const T=W[di];$('#dbox').innerHTML=`<div class="rzb"><div class="eyebrow">${NM(di)} · ${T.length} words</div><div class="ipa dip">${D[di][1]}</div><label for="dta" class="legend" style="display:block;margin-top:14px">Type the English sentence. Case and punctuation are ignored. Press Ctrl + Enter to check.</label><textarea id="dta" rows="3" autocomplete="off" autocapitalize="off" spellcheck="false"></textarea><div class="acts"><button class="btn pri" id="dck">Check answer</button><button class="btn sm" id="dh">Hint (−5)</button><button class="btn sm" id="dnx">Next sentence</button></div><div id="dhint" class="legend" role="status"></div><div id="dres"></div></div>`;
+$('#dck').onclick=dcheck;$('#dta').addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter')dcheck()});$('#dnx').onclick=()=>{di=(di+1)%N;drender()};$('#dh').onclick=()=>{dhint=Math.min(dhint+1,3);$('#dhint').textContent='Hint '+dhint+'/3: starts with "'+T.slice(0,[0,1,3,5][dhint]).map(x=>x.w).join(' ')+' ..."'}}
+function dcheck(){const T=W[di],ta=$('#dta').value.trim();if(!ta){toast('Type your answer before checking.');return}
+const H=nw(ta),al=align(T.map(x=>x.w),H),ok=al.filter(r=>r.ok).length,sc=Math.max(0,Math.round(100*ok/Math.max(T.length,H.length))-5*dhint),prev=S.dict[di];
+S.dtries[di]=(S.dtries[di]||0)+1;S.dict[di]=Math.max(prev||0,sc);stamp();save();
+const ws=al.map(x=>x.ok?`<span class="dw ok">${x.w}</span>`:x.extra?`<span class="dw ext"><del>${x.h}</del><sup>Extra</sup></span>`:x.miss?`<span class="dw miss"><b>${x.w}</b><sup>Missing</sup></span>`:`<span class="dw bad"><del>${x.h}</del> <b>${x.w}</b><sup>Wrong</sup></span>`).join(' ');
+const nb=al.filter(x=>!x.ok&&x.h&&x.w).length,nm_=al.filter(x=>x.miss).length,ne=al.filter(x=>x.extra).length,notes=al.filter(x=>!x.ok&&x.h&&x.w&&pair(x.w,x.h)).map(x=>`<div class="dg gd"><b>${x.h} / ${x.w}:</b> ${pair(x.w,x.h)}</div>`).join('');
+$('#dres').innerHTML=`<div class="acts" style="gap:16px;margin:18px 0 8px"><div class="ring" style="--p:${sc}"><b>${sc}</b></div><div><strong>${lab(sc)}</strong> · out of 100<br><small>${ok}/${T.length} words correct${dhint?' · −'+5*dhint+' for hints':''}</small><br><small>${hist(prev,sc,S.dtries[di])}</small></div></div><p class="legend">Green = correct. Red "Wrong" shows your word struck through and the right one. Gold "Missing" = skipped. Grey "Extra" = added.</p><div class="diff">${ws}</div><h4 class="sub2">Answer key</h4><div class="en">${fmt(D[di][0])}</div><div class="vi">${D[di][2]}</div>${al.every(x=>x.ok)?'<p><strong>Perfect.</strong></p>':`<p class="legend">Summary: ${nb} wrong · ${nm_} missing · ${ne} extra</p>`}${notes?`<h4 class="sub2">Easily confused words</h4>${notes}`:''}<div class="acts"><button class="btn pri sm" id="dr">Try again</button><button class="btn sm" data-hear="${di}">${IC.play}<span>Hear it</span></button></div>`;
+$('#dr').onclick=drender;dnav();renderScore()}
+$('#dn').addEventListener('click',e=>{const b=e.target.closest('[data-d]');if(b){di=+b.dataset.d;drender()}});
+/* clicks */
+document.addEventListener('click',e=>{const t=e.target;let b;
+if(b=t.closest('[data-say]')){const i=+b.dataset.say;resetAll();hl(i,false);sayS(i,SP,()=>hl(-1))}
+else if(b=t.closest('[data-hear]')){resetAll();sayS(+b.dataset.hear,SP)}
+else if(b=t.closest('[data-loop]')){let k=0;const i=+b.dataset.loop;resetAll();hl(i,false);const n=()=>{if(k++<3)sayS(i,SP,()=>setTimeout(n,600));else hl(-1)};n()}
+else if(b=t.closest('[data-rec]'))toggleRec(+b.dataset.rec);
+else if(b=t.closest('[data-again]'))toggleRec(+b.dataset.again);
+else if(b=t.closest('[data-w]')){resetAll();say(b.dataset.w,SP)}
+else if(b=t.closest('[data-cmp]')){const i=+b.dataset.cmp,a=cards()[i].querySelector('audio');resetAll();sayS(i,SP,()=>a&&a.play())}
+else if(b=t.closest('[data-dl]'))dlRec(+b.dataset.dl);
+else if(b=t.closest('[data-ftd]')){const k=takes[+b.dataset.ftd];save2('answer-q'+(k.q+1)+'-'+k.t.replace(':','h')+'.'+(/mp4/.test(k.b.type)?'mp4':'webm'),k.b)}
+else if(b=t.closest('[data-ftx]')){const k=+b.dataset.ftx;URL.revokeObjectURL(takes[k].url);takes.splice(k,1);renderQ();renderTakes()}});
+/* score */
+const mean=o=>{const v=Object.values(o);return v.length?v.reduce((a,b)=>a+b,0)/v.length:null};
+function renderScore(){const p=mean(S.best),d=mean(S.dict),pts=[p,d].filter(x=>x!=null),t=pts.length?Math.round(pts.reduce((a,b)=>a+b,0)/pts.length):null,np=Object.keys(S.best).length,nd=Object.keys(S.dict).length,pr=np+nd,sk=streak();
+$('#m1').textContent=p==null?'—':Math.round(p)+'/100';$('#b1').style.width=(p||0)+'%';
+$('#m2').textContent=d==null?'—':Math.round(d)+'/100';$('#b2').style.width=(d||0)+'%';
+$('#m3').textContent=t==null?'—':t;$('#rg').style.setProperty('--p',t||0);
+$('#m4').textContent=pr+'/'+2*N;$('#b4').style.width=(pr/(2*N)*100)+'%';
+$('#stk').textContent='Average of attempted lines · '+sk+(sk===1?' day':' days')+' streak';
+const done=D.every((_,i)=>S.best[i]!=null&&S.dict[i]!=null);if(done&&renderScore.init&&!renderScore.was)toast('All exercises completed. Open Results to save your PDF report.');renderScore.was=done;renderScore.init=true;$$('#nv [data-p="5"]').forEach(b=>b.classList.toggle('rdy',done));if(typeof cur!=='undefined'&&cur===5)renderResults()}
+async function save2(n,d){if(!DL){toast('This browser cannot save files from here.');return}try{await DL.save({filename:n,data:d});toast('File saved.')}catch(e){if(!e||e.code!=='declined')toast('Could not save the file ('+((e&&e.code)||'error')+').')}}
+function dlRec(i){const b=blobs[i];save2('line-'+LB(i)+'-recording.'+(/mp4/.test(b.type)?'mp4':'webm'),b)}
+$('#rr').onclick=function(){if(this.dataset.c!=='1'){this.dataset.c='1';this.textContent='Tap again to confirm';setTimeout(()=>{this.dataset.c='';this.textContent='Reset progress'},3000);return}S={best:{},tries:{},weak:{},dict:{},dtries:{},days:[],voice:S.voice,sp:S.sp,name:S.name,sa:S.sa};save();this.dataset.c='';this.textContent='Reset progress';$$('#list .rz').forEach(z=>z.innerHTML='');upd();dnav();renderScore();if($('#dta'))drender();toast('Progress reset.')};
+/* recording studio (not scored) */
+const FQ=['How did the mechanical clock change the way people kept time?','Why did different places start counting the 24 hours of the day from different moments?','What was the revolutionary part of the early mechanical clock, and what problem did the fusee solve?'],
+FH=['Hint: temporal hours, equal hours, the advent of the mechanical clock, the question of when to begin counting.','Hint: Italian hours at sunset, Babylonian hours at sunrise, astronomical hours at midday, great clock hours and French hours at midnight.','Hint: the escapement, the descending weight and the gear wheels, the coiled spring, the changing tension of the mainspring.'];
+let fr=null,fq=0;const takes=[],fmtD=n=>String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0');
+function renderQ(){$('#ql').innerHTML=FQ.map((q,i)=>{const n=takes.filter(k=>k.q===i).length;return `<button class="qi" role="radio" aria-checked="${i===fq}" data-q="${i}"><span class="qn">${String(i+1).padStart(2,'0')}</span><span class="qt">${q}<small>${FH[i]}</small></span>${n?`<span class="qb" title="${n} take${n>1?'s':''}">${n}</span>`:''}</button>`}).join('');$('#qcur').textContent='Question '+(fq+1)+' / '+FQ.length}
+function renderTakes(){const L=takes.map((k,i)=>[k,i]).filter(x=>x[0].q===fq);
+$('#ft').innerHTML=L.length?`<h4 class="sub2">Takes for question ${fq+1}</h4>`+L.map((x,j)=>{const k=x[0],i=x[1];return `<div class="take"><div class="tk-h"><b>Take ${L.length-j}</b><span class="mut">${k.t} · ${fmtD(k.d)}</span></div><audio controls src="${k.url}"></audio><div class="acts">${/mp4|webm/.test(k.b.type)?`<button class="btn sm" data-ftd="${i}">Download</button>`:''}<button class="btn sm" data-ftx="${i}">Delete</button></div></div>`}).join('')+'<p class="legend" style="margin-top:12px">Takes are kept for this session only. Download them to keep a copy.</p>':'<p class="legend" style="margin-top:14px">No takes for this question yet.</p>'}
+$('#ql').addEventListener('click',e=>{const b=e.target.closest('[data-q]');if(!b)return;if(fr&&fr.state==='recording'){toast('Stop recording before changing the question.');return}fq=+b.dataset.q;renderQ();renderTakes()});
+$('#fr').onclick=async function(){const btn=this,tx=btn.querySelector('.tx');if(fr&&fr.state==='recording'){fr.stop();return}
+let st;try{st=await navigator.mediaDevices.getUserMedia({audio:true})}catch(e){toast('Cannot access the microphone. Allow microphone access for this page.');return}
+stopSpeech();resetAll();const q=fq,mr=new MediaRecorder(st),ch=[],t0=Date.now();mr.ondataavailable=e=>e.data.size&&ch.push(e.data);fr=mr;
+const stopW=wave(st,$('#qwv'),$('#qtm')),at=setTimeout(()=>{if(mr.state==='recording')mr.stop()},180000);
+mr.onstop=()=>{stopW();clearTimeout(at);st.getTracks().forEach(t=>t.stop());const b=new Blob(ch,{type:mr.mimeType});takes.unshift({q,b,url:URL.createObjectURL(b),t:new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}),d:Math.round((Date.now()-t0)/1000)});const cv=$('#qwv');cv.getContext('2d').clearRect(0,0,cv.width,cv.height);btn.classList.remove('rec');btn.classList.add('pri');btn.setAttribute('aria-pressed','false');tx.textContent='Record again';$('#fmsg').textContent='Saved. Listen back below.';$('#qtm').textContent='00:00';renderQ();renderTakes()};
+mr.start();btn.classList.remove('pri');btn.classList.add('rec');btn.setAttribute('aria-pressed','true');tx.textContent='Stop recording';$('#fmsg').textContent='Recording…'};
+renderQ();renderTakes();
+/* tabs, gate, theme, reveal */
+let cur=0,unlocked=false;const tabs=$$('#nv [data-p]'),nm=$('#nm'),gf=$('#gf');
+function go(n){if(!unlocked&&n!==0)return;if(n===cur)return;const back=n<cur;$('#p'+cur).hidden=true;cur=n;const p=$('#p'+n);p.hidden=false;p.classList.toggle('back',back);p.style.animation='none';p.offsetWidth;p.style.animation='';tabs.forEach(t=>t.setAttribute('aria-selected',String(+t.dataset.p===n)));scrollTo({top:0});if(n===2&&!$('#dta'))drender();if(n===5)renderResults();updDock();obs()}
+tabs.forEach(t=>t.onclick=()=>go(+t.dataset.p));
+$('#nv').addEventListener('keydown',e=>{const k={ArrowRight:1,ArrowLeft:-1}[e.key];if(!k)return;e.preventDefault();const n=(cur+k+tabs.length)%tabs.length;go(n);tabs[n].focus()});
+function user(){const n=S.name||'';document.body.classList.toggle('locked',!unlocked);$('#nv').hidden=!unlocked;$('#uc').hidden=!unlocked;const gn=n.trim().split(/\s+/).pop()||'';$('#av').textContent=(gn[0]||'?').toUpperCase();$('#un').textContent=gn;$('#uc').title=n?n+' · change name':'Change name';$('#who').textContent=n||'Guest'}
+function gate(){const has=!!S.name;$('#gh').textContent=has?'Welcome back':'Candidate details';$('#gp').textContent=has?'Confirm your name to continue. Your progress is saved on this device.':'Enter your name to unlock all parts. Your progress is saved on this device.';$('#gs .tl').textContent=unlocked||has?'Continue':'Start practice';if(S.name&&!nm.value)nm.value=S.name}
+gf.addEventListener('submit',e=>{e.preventDefault();const v=nm.value.trim().replace(/\s+/g,' ');if(v.length<2||!/\p{L}/u.test(v)){$('#ge').textContent='Please enter your full name (at least 2 letters).';nm.classList.remove('shake');void nm.offsetWidth;nm.classList.add('shake');nm.focus();return}$('#ge').textContent='';S.name=v;save();unlocked=true;user();gate();go(1)});
+nm.addEventListener('input',()=>{$('#ge').textContent=''});
+$('#uc').onclick=()=>{go(0);nm.focus();nm.select()};
+/* vocabulary */
+const V=[
+["Arise","/əˈraɪz/","Âm tiết thứ 2.","Verb (động từ – bất quy tắc).","rise, ascend, appear",["Nảy sinh, phát sinh.","Xuất hiện, xảy ra.","Đứng dậy, vươn lên.","Đi lên, tăng lên (tùy ngữ cảnh)."],[["emerge","/ɪˈmɜːdʒ/","Xuất hiện, nổi lên"],["appear","/əˈpɪə/","Xuất hiện"],["occur","/əˈkɜː/","Xảy ra"],["happen","/ˈhæpən/","Xảy ra"],["come up","/kʌm ʌp/","Nảy sinh, được đề cập"],["develop","/dɪˈveləp/","Phát triển, nảy sinh"],["rise","/raɪz/","Đứng lên, tăng lên"]],"<b>Antonym</b> (trái nghĩa trong một số ngữ cảnh): <b>retire</b> /rɪˈtaɪə/: nghỉ hưu, rút lui.",[],["<b>Lưu ý:</b> Retire không phải từ trái nghĩa trực tiếp của arise trong mọi trường hợp. Đây là từ được ghi sau dấu # trong tài liệu."],[["A question arises","Một câu hỏi nảy sinh."],["Problems arise","Các vấn đề phát sinh."],["Difficulties arise","Những khó khăn xuất hiện."],["An opportunity arises","Một cơ hội xuất hiện."],["Arise from something","Phát sinh từ điều gì."]],"With these systems, the question of when to begin counting arose.","Với những hệ thống này, câu hỏi về thời điểm bắt đầu tính giờ đã nảy sinh."],
+["Evolve","/ɪˈvɒlv/","Âm tiết thứ 2.","Verb (động từ).","change, grow, advance, to develop and change gradually over a long period of time.",["Thay đổi, phát triển, tiến bộ; phát triển và thay đổi dần dần trong một khoảng thời gian dài."],[["develop","/dɪˈveləp/","Phát triển"],["progress","/prəˈɡres/","Tiến triển"],["advance","/ədˈvɑːns/","Tiến bộ, phát triển"],["grow","/ɡrəʊ/","Lớn lên, phát triển"],["change gradually","/tʃeɪndʒ ˈɡrædʒuəli/","Thay đổi dần dần"],["transform","/trænsˈfɔːm/","Biến đổi"],["adapt","/əˈdæpt/","Thích nghi, điều chỉnh"]],"",["<b>Evolve:</b> Phát triển hoặc biến đổi dần dần theo thời gian.","<b>Develop:</b> Phát triển nói chung.","<b>Transform:</b> Biến đổi đáng kể về hình thức hoặc bản chất.","<b>Adapt:</b> Thay đổi để thích nghi với hoàn cảnh."],[],[["Evolve over time","Phát triển theo thời gian."],["Evolve gradually","Phát triển dần dần."],["Evolve into something","Phát triển thành một thứ gì đó."],["Systems evolve","Các hệ thống phát triển."],["Technology evolves","Công nghệ phát triển."]],"A number of systems evolved in the early 14th century.","Một số hệ thống đã phát triển vào đầu thế kỷ 14."],
+["Scheme","/skiːm/","Một âm tiết.","Noun (danh từ).","plan, idea, method.",["Kế hoạch.","Ý tưởng.","Phương pháp.","Hệ thống hoặc cách tổ chức."],[["plan","/plæn/","Kế hoạch"],["system","/ˈsɪstəm/","Hệ thống"],["method","/ˈmeθəd/","Phương pháp"],["arrangement","/əˈreɪndʒmənt/","Sự sắp xếp"],["strategy","/ˈstrætədʒi/","Chiến lược"],["design","/dɪˈzaɪn/","Thiết kế, phương án"],["framework","/ˈfreɪmwɜːk/","Khuôn khổ, hệ thống cấu trúc"]],"",["<b>Scheme:</b> Một kế hoạch hoặc hệ thống được tổ chức theo một mục đích nhất định.","<b>Plan:</b> Kế hoạch chung.","<b>Method:</b> Phương pháp thực hiện.","<b>Strategy:</b> Chiến lược nhằm đạt mục tiêu dài hạn."],["<b>Lưu ý:</b> Trong tiếng Anh Anh, scheme đôi khi còn mang nghĩa kế hoạch bí mật hoặc âm mưu, tùy ngữ cảnh. Trong bài đọc, từ này mang nghĩa trung tính: hệ thống tính giờ."],[["A pricing scheme","Hệ thống định giá."],["A payment scheme","Kế hoạch thanh toán."],["A classification scheme","Hệ thống phân loại."],["A complex scheme","Một hệ thống phức tạp."],["A new scheme","Một kế hoạch/hệ thống mới."]],"The schemes that divided the day into 24 equal parts varied according to the start of the count.","Các hệ thống chia một ngày thành 24 phần bằng nhau khác nhau tùy theo thời điểm bắt đầu tính giờ."],
+["Divide","/dɪˈvaɪd/","Âm tiết thứ 2.","Verb (động từ).","split, separate, distribute, allocate.",["Chia.","Phân chia.","Tách ra.","Phân bổ, phân phối."],[["split","/splɪt/","Chia thành các phần"],["separate","/ˈsepəreɪt/","Tách riêng"],["distribute","/dɪˈstrɪbjuːt/","Phân phối"],["allocate","/ˈæləkeɪt/","Phân bổ"],["partition","/pɑːˈtɪʃən/","Phân chia thành các phần"],["break up","/breɪk ʌp/","Chia nhỏ, tách ra"],["distinguish","/dɪˈstɪŋɡwɪʃ/","Phân biệt"]],"<b>Antonym</b> (trái nghĩa): <b>join</b> /dʒɔɪn/: kết nối, nối lại, kết hợp.",["<b>Divide:</b> Chia một tổng thể thành nhiều phần.","<b>Split:</b> Chia hoặc tách thành những phần riêng biệt.","<b>Separate:</b> Làm cho những thứ đang kết hợp trở nên riêng biệt.","<b>Distribute:</b> Phân phối cho nhiều người hoặc nhiều nơi.","<b>Allocate:</b> Phân bổ theo kế hoạch hoặc mục đích cụ thể."],[],[["Divide into parts","Chia thành các phần."],["Divide equally","Chia đều."],["Divide something into two","Chia thứ gì thành hai phần."],["Divide the day into 24 hours","Chia một ngày thành 24 giờ."],["Divide responsibilities","Phân chia trách nhiệm."]],"The system divided the day into two twelve-hour periods.","Hệ thống chia một ngày thành hai khoảng thời gian, mỗi khoảng 12 giờ."],
+["Astronomical","/ˌæstrəˈnɒmɪkəl/","Trọng âm phụ: âm tiết thứ nhất. Trọng âm chính: âm tiết thứ ba.","Adjective (tính từ).","relating to the scientific study of the stars.",["Thuộc về thiên văn học; liên quan đến việc nghiên cứu khoa học về các ngôi sao và những thiên thể."],[["astronomical","/ˌæstrəˈnɒmɪkəl/","Thuộc thiên văn học"],["celestial","/səˈlestɪəl/","Thuộc về bầu trời, thiên thể"],["stellar","/ˈstelə/","Thuộc về các ngôi sao"],["space-related","/ˈspeɪs rɪˌleɪtɪd/","Liên quan đến không gian"],["astronomy-related","/əˈstrɒnəmi rɪˌleɪtɪd/","Liên quan đến thiên văn học"]],"",["<b>Astronomical:</b> Thuộc lĩnh vực thiên văn học.","<b>Celestial:</b> Liên quan đến bầu trời hoặc các thiên thể.","<b>Stellar:</b> Liên quan cụ thể đến các ngôi sao.","<b>Astronomy:</b> Danh từ, ngành thiên văn học."],["<b>Chú ý:</b> Astronomical còn có nghĩa bóng là cực kỳ lớn, chẳng hạn astronomical costs (chi phí khổng lồ). Tuy nhiên, nghĩa này không phù hợp với ngữ cảnh bài đọc."],[["Astronomical observations","Những quan sát thiên văn."],["Astronomical research","Nghiên cứu thiên văn."],["Astronomical data","Dữ liệu thiên văn."],["Astronomical clock","Đồng hồ thiên văn."],["Astronomical calculations","Các phép tính thiên văn."]],"Astronomical hours began at midday.","Giờ thiên văn bắt đầu vào giữa trưa."],
+["Supersede","/ˌsuːpəˈsiːd/","Âm tiết thứ ba.","Verb (động từ).","replace, supplant, displace.",["Thay thế.","Thế chỗ.","Thay thế một thứ cũ bằng một thứ mới hơn hoặc phù hợp hơn."],[["replace","/rɪˈpleɪs/","Thay thế"],["supplant","/səˈplɑːnt/","Thế chỗ, thay thế"],["displace","/dɪˈspleɪs/","Thay thế, đẩy ra khỏi vị trí"],["substitute","/ˈsʌbstɪtjuːt/","Thay thế"],["take the place of","/teɪk ðə pleɪs əv/","Đảm nhận vị trí của"],["make obsolete","/meɪk ˈɒbsəliːt/","Khiến trở nên lỗi thời"]],"",["<b>Supersede:</b> Thay thế một thứ đã tồn tại bằng thứ mới hơn hoặc tiến bộ hơn.","<b>Replace:</b> Thay thế nói chung.","<b>Supplant:</b> Thay thế và chiếm vị trí của một thứ khác.","<b>Displace:</b> Đẩy một thứ ra khỏi vị trí ban đầu."],["<b>Ngữ pháp cần nhớ:</b> Supersede + object.<br>Ví dụ: Modern technology superseded older systems. Không dùng <i>supersede by</i> theo cấu trúc chủ động.<br>Ở thể bị động: Be superseded by + something."],[["Supersede an old system","Thay thế một hệ thống cũ."],["Supersede traditional methods","Thay thế các phương pháp truyền thống."],["Be superseded by technology","Bị công nghệ thay thế."],["Supersede an earlier version","Thay thế phiên bản trước đó."]],"These systems were eventually superseded by French hours.","Cuối cùng, những hệ thống này đã được thay thế bằng giờ kiểu Pháp."],
+["Commence","/kəˈmens/","Âm tiết thứ hai.","Verb (động từ).","start, begin, originate.",["Bắt đầu.","Khởi đầu.","Khai mạc.","Khởi sự."],[["start","/stɑːt/","Bắt đầu"],["begin","/bɪˈɡɪn/","Bắt đầu"],["initiate","/ɪˈnɪʃieɪt/","Khởi xướng"],["launch","/lɔːntʃ/","Khởi động, phát động"],["set about","/set əˈbaʊt/","Bắt tay vào làm"],["get started","/ɡet ˈstɑːtɪd/","Bắt đầu thực hiện"],["open","/ˈəʊpən/","Mở đầu, khai mạc"]],"",["<b>Commence:</b> Bắt đầu, mang sắc thái trang trọng.","<b>Begin:</b> Bắt đầu, thông dụng.","<b>Start:</b> Bắt đầu, phổ biến trong giao tiếp.","<b>Initiate:</b> Khởi xướng một quá trình hoặc hoạt động.","<b>Originate:</b> Bắt nguồn, có nguồn gốc từ một nơi hoặc thời điểm."],["<b>Lưu ý:</b> Originate không phải từ đồng nghĩa hoàn toàn với commence. Hai từ chỉ gần nghĩa trong một số ngữ cảnh liên quan đến sự khởi đầu."],[["Commence work","Bắt đầu công việc."],["Commence operations","Bắt đầu hoạt động."],["Commence proceedings","Bắt đầu tiến trình."],["Commence at midnight","Bắt đầu vào lúc nửa đêm."],["Commence a journey","Bắt đầu một chuyến đi."]],"The two twelve-hour periods commenced at midnight.","Hai khoảng thời gian 12 giờ bắt đầu vào lúc nửa đêm."]];
+const sayTxt=w=>w.split('(')[0].trim().toLowerCase().replace(/’/g,"'");
+$('#vg').innerHTML=V.map((v,i)=>`<article class="card vc rv" style="--d:${(i%2)*.08}s" data-q="${[v[0],v[2],v[3],v[4],v[5].join(' '),v[6].map(x=>x.join(' ')).join(' '),v[7],v[8].join(' '),v[9].join(' '),v[10].map(x=>x.join(' ')).join(' '),v[11],v[12]].join(' ').replace(/<[^>]+>/g,' ').toLowerCase().replace(/"/g,'')}"><header class="vh"><span class="qn">${String(i+1).padStart(2,'0')}</span><div><h3>${v[0]}</h3><span class="ipa">${v[1]}</span><span class="pos">Trọng âm: ${v[2]}</span><span class="pos">Từ loại: ${v[3]}</span></div><button class="btn sm sayb" data-w="${sayTxt(v[0])}" aria-label="Listen to ${sayTxt(v[0])}">${IC.play}<span>Listen</span></button></header><p class="vm"><b>Meaning:</b> ${v[4]}</p><ul class="vl">${v[5].map(x=>`<li>${x}</li>`).join('')}</ul><h4 class="sub2">Synonyms</h4><ul class="syn">${v[6].map(x=>`<li data-w="${sayTxt(x[0])}" title="Tap to listen"><b>${x[0]}</b><span class="ipa">${x[1]}</span><em>${x[2]}</em></li>`).join('')}</ul>${v[7]?`<p class="legend vnote">${v[7]}</p>`:''}${v[8].length?`<h4 class="sub2">Key differences</h4><ul class="diffl">${v[8].map(x=>`<li>${x}</li>`).join('')}</ul>`:''}${v[9].map(n=>`<p class="legend vnote">${n}</p>`).join('')}<h4 class="sub2">Collocations</h4><ul class="syn">${v[10].map(c=>`<li data-w="${sayTxt(c[0])}" title="Tap to listen"><b>${c[0]}</b><em>${c[1]}</em></li>`).join('')}</ul><div class="ex" data-w="${v[11]}" title="Tap to listen"><span class="cap">Example</span><b>${v[11]}</b><em>${v[12]}</em></div></article>`).join('');
+function vfilter(){const q=$('#vq').value.trim().toLowerCase();let n=0;$$('#vg .vc').forEach(c=>{const m=!q||c.dataset.q.includes(q);c.hidden=!m;if(m)n++});$('#vn').textContent=q?n+' of '+V.length+' terms':V.length+' terms';let e=$('#vempty');if(!n){if(!e){e=document.createElement('p');e.id='vempty';e.className='legend';e.textContent='No matching terms. Try another word.';$('#vg').after(e)}}else if(e)e.remove()}
+$('#vq').addEventListener('input',vfilter);vfilter();
+/* quick controls dock (compact bar that appears when the control deck scrolls away) */
+function syncDock(){const on=$('#aB').getAttribute('aria-pressed')==='true',d=$('#dPlay');d.setAttribute('aria-pressed',String(on));d.querySelector('.tx').textContent=on?'Stop':'Play all';$$('#dSpd .xb').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.s===SP)));$$('#dock .chip').forEach(b=>b.setAttribute('aria-pressed',$('#'+b.dataset.t).getAttribute('aria-pressed')));$('#dM').textContent=$('#m3').textContent;$('#dRg').style.setProperty('--p',$('#rg').style.getPropertyValue('--p')||0);$('#dN').textContent=S.name||''}
+function updDock(){const hh=$('#hd').offsetHeight;document.documentElement.style.setProperty('--hh',hh+'px');const dk=$('.deck');const show=cur===1&&!!dk&&dk.getBoundingClientRect().bottom<hh+10;const d=$('#dock');d.classList.toggle('show',show);d.inert=!show}
+$('#dPlay').onclick=()=>$('#aB').click();
+$$('#dSpd .xb').forEach(b=>b.onclick=()=>{$('#spd [data-s="'+b.dataset.s+'"]').click();syncDock()});
+$$('#dock .chip').forEach(b=>b.onclick=()=>{$('#'+b.dataset.t).click();syncDock()});
+new MutationObserver(syncDock).observe($('.deck'),{subtree:true,attributes:true,attributeFilter:['aria-pressed'],childList:true,characterData:true});syncDock();
+/* results report + PDF */
+function plain(i){let t=D[i][0].replace(/\s*\/+/g,'').replace(/\s+/g,' ').trim();t=t.split(' ').map(w=>/^[A-Z][a-z]/.test(w)?w[0]+w.slice(1).toLowerCase():w.toLowerCase()).join(' ');t=t.replace(/\b(italian|babylonian|french|bedfordshire|england|germany)\b/g,m=>m[0].toUpperCase()+m.slice(1));return t.replace(/(^|[.!?]\s+)([a-z])/g,(m,a,b)=>a+b.toUpperCase())}
+const pill=v=>v==null?'<span class="spl n">—</span>':`<span class="spl ${v>=80?'g':v>=60?'m':'b'}">${v}</span>`;
+function renderResults(){const p=mean(S.best),d=mean(S.dict),pts=[p,d].filter(x=>x!=null),t=pts.length?Math.round(pts.reduce((a,b)=>a+b,0)/pts.length):null,np=Object.keys(S.best).length,nd=Object.keys(S.dict).length,k=np+nd,done=k===2*N&&D.every((_,i)=>S.best[i]!=null&&S.dict[i]!=null),sa=Array.isArray(S.sa)&&S.sa.every(Boolean)?S.sa:null,saAvg=sa?sa.reduce((a,b)=>a+b)/4:null,date=new Date().toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+const weak=Object.entries(S.weak||{}).sort((a,b)=>b[1]-a[1]).slice(0,10),SAL=['Clarity','Stress','Rhythm','Fluency'];
+$('#rp').innerHTML=`<div class="rp-hd"><div><div class="eyebrow">AURELIA ACADEMY · Practice Report</div><h2>A Chronicle of Timekeeping · Part 3</h2><p class="mut">Mechanical clocks, hour systems and the escapement · IPA, stress and pausing</p></div><div class="rp-meta"><span>Candidate</span><b>${(S.name||'Candidate').replace(/[<>&]/g,'')}</b><span>${date}</span><span class="rp-st ${done?'ok':''}">${done?'Completed':'In progress · '+k+'/'+2*N}</span></div></div>
+<div class="rp-body"><div class="kpis"><div class="kpi main"><div class="ring" style="--p:${t||0}"><b>${t==null?'—':t}</b></div><div><span class="cap">Overall</span><b>${t==null?'—':lab(t)}</b><small>out of 100</small></div></div>
+<div class="kpi"><span class="cap">Pronunciation</span><b>${p==null?'—':Math.round(p)}</b><small>${np}/${N} lines</small></div>
+<div class="kpi"><span class="cap">Dictation</span><b>${d==null?'—':Math.round(d)}</b><small>${nd}/${N} lines</small></div>
+<div class="kpi"><span class="cap">Self-assessment</span><b>${saAvg==null?'—':saAvg.toFixed(1)}</b><small>out of 5</small></div>
+<div class="kpi"><span class="cap">Completion</span><b>${Math.round(k/(2*N)*100)}%</b><small>${k}/${2*N} tasks</small></div></div>
+<div><h3>Results by line</h3><div class="tw"><table class="rt"><thead><tr><th>#</th><th>Line</th><th>Pronunciation</th><th>Tries</th><th>Dictation</th><th>Tries</th></tr></thead><tbody>${D.map((_,i)=>{const s=plain(i);const w=s.split(' ');return `<tr><td>${LB(i)}</td><td class="rt-l">${w.length>10?w.slice(0,10).join(' ')+' …':s}</td><td>${pill(S.best[i])}</td><td>${S.tries[i]||0}</td><td>${pill(S.dict[i])}</td><td>${S.dtries[i]||0}</td></tr>`}).join('')}</tbody></table></div></div>
+<div class="rp-two"><div><h3>Words to practise</h3>${weak.length?`<div class="wk">${weak.map(x=>`<span>${x[0]} <em>×${x[1]}</em></span>`).join('')}</div>`:'<p class="mut">No problem words recorded yet.</p>'}</div>
+<div><h3>Self-assessment</h3>${sa?`<div class="sal">${sa.map((v,i)=>`<div><span>${SAL[i]}</span><div class="bar2"><i style="width:${v*20}%"></i></div><b>${v}/5</b></div>`).join('')}</div>`:'<p class="mut">Not completed. Rate yourself on the Record page.</p>'}</div></div>
+<div class="sig"><div><small>Teacher’s comment</small></div><div><small>Signature</small></div></div>
+<p class="legend rp-ft">Scores: 80–100 excellent · 60–79 fair · below 60 keep practising. Pronunciation = 80% word accuracy + 20% pace. Dictation = % correct words minus hint penalties.</p><p class="prt legend" style="display:none"><b>AURELIA ACADEMY</b> · Contact: 0964 964 264 | Ms. Angie · © 2026 Aurelia Academy</p></div>`;
+const bt=$('#pdf');bt.disabled=!done;$('#pdfp').hidden=done;$('#pdfm').textContent=done?'All exercises completed. Your report is ready.':'Finish Pronunciation and Dictation for every line to unlock the full report ('+k+'/'+2*N+' done).';obs()}
+function savePDF(){renderResults();const old=document.title;document.title='Report - '+(S.name||'Candidate')+' - A Chronicle of Timekeeping - Part 3';const back=()=>{document.title=old;removeEventListener('afterprint',back)};addEventListener('afterprint',back);setTimeout(()=>{try{window.print()}catch(e){document.title=old;toast('Printing is blocked here. Open the page in a full browser tab.')}},80)}
+$('#pdf').onclick=savePDF;$('#pdfp').onclick=savePDF;
+$$('.stg').forEach(g=>[...g.children].forEach((c,i)=>c.style.setProperty('--i',i)));
+$$('.tw tbody tr').forEach((tr,i)=>tr.style.setProperty('--i',i));
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+function obs(){$$('.rv:not(.on),.stg:not(.on)').forEach(el=>{if(el.offsetParent)io.observe(el)})}obs();
+let tick=0;function onScroll(){if(tick)return;tick=requestAnimationFrame(()=>{tick=0;const h=document.documentElement,mx=h.scrollHeight-innerHeight;h.style.setProperty('--sp',mx>0?(scrollY/mx).toFixed(4):0);h.style.setProperty('--sy',scrollY);$('#hd').classList.toggle('sc',scrollY>8);updDock()})}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+const tb=$('#tbtn');
+function theme(d,keep){const r=document.documentElement;r.classList.add('tswap');r.dataset.theme=d?'dark':'light';tb.setAttribute('aria-checked',String(d));tb.title=d?'Dark mode · switch to light':'Light mode · switch to dark';clearTimeout(theme.k);theme.k=setTimeout(()=>r.classList.remove('tswap'),650);if(keep)try{localStorage.setItem('apr2:theme',d?'dark':'light')}catch(e){}}
+tb.setAttribute('aria-checked',String(document.documentElement.dataset.theme!=='light'));
+tb.onclick=()=>theme(tb.getAttribute('aria-checked')!=='true',true);
+/* self-assessment */
+const C=[['Clarity','Clear, easy-to-hear sounds that match the IPA.'],['Stress','Correct syllable and key-word stress.'],['Rhythm','Pausing and pace follow the chunks.'],['Fluency','Smooth delivery with few hesitations.']],sc2=Array.isArray(S.sa)&&S.sa.length===4?S.sa.slice():[0,0,0,0];
+$('#sa').innerHTML=C.map((c,i)=>`<div class="crit"><h3>${c[0]}</h3><p class="mut">${c[1]}</p><div class="rate" data-i="${i}" role="group" aria-label="${c[0]}">${[1,2,3,4,5].map(n=>`<button aria-pressed="false" aria-label="${c[0]}: ${n} of 5">${n}</button>`).join('')}</div></div>`).join('');
+function paintSA(){$$('#sa .rate').forEach(r=>[...r.children].forEach(b=>b.setAttribute('aria-pressed',String(+b.textContent===sc2[+r.dataset.i]))));const n=sc2.filter(Boolean).length,out=$('#sr');
+if(n<4){out.innerHTML=n?`<div class="res">Rated ${n}/4 skills.</div>`:'';return}
+const avg=sc2.reduce((a,b)=>a+b)/4,low=C[sc2.indexOf(Math.min(...sc2))][0];
+out.innerHTML=`<div class="res"><strong>Average: ${avg.toFixed(1)} / 5</strong><br>${avg>=4?'Excellent. Keep it up and try a faster pace.':avg>=3?'Good. A little more practice will make it steady.':'Keep practising: listen to the model again and repeat slowly.'}<br>Focus next on: <strong>${low}</strong>.</div>`}
+$('#sa').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;sc2[+b.parentElement.dataset.i]=+b.textContent;S.sa=sc2.slice();save();paintSA()});
+paintSA();upd();dnav();renderScore();user();gate();
+</script>
+</body>
+</html>
